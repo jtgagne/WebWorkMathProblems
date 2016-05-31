@@ -1,0 +1,36 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## KEYWORDS('definite' 'integral','Calculus', 'Riemann Integral','integrals', 'definite', 'integrals', 'integration', 'definite integrals','integration')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+TEXT(beginproblem(), $BR, $BBOLD, "Estimating the Area Under a Curve", $EBOLD);
+$showPartialCorrectAnswers = 0;
+
+$column1 = PGML::Format(<<END_PGML);
+
+Suppose the velocity of a flock of migrating birds is f(t), the graph of which is shown in the image 2.15. 
+
+(a) Approximate the distance traveled by the flock during the seven-hour time period shown: 
+[______________________________]{135}
+
+END_PGML
+
+$column2 = image("/problem_43.png", width=>700, tex_size=>800);
+
+TEXT(ColumnTable($column1, $column2));
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
