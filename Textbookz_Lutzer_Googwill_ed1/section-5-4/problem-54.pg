@@ -1,0 +1,173 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5-4')
+## Problem1('54')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"parserRadioButtons.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+
+TEXT("(1 pt) ", $BBOLD, "The Fundamental Theorem of Integration", $EBOLD, $BR, $BR);
+
+$context = Context("Numeric");                 #Get the context of the Problem
+Context()->variables->add(t=>'Real'); #Add a variable for time to the context
+Context()->variables->add(C=>'Real'); #Add a variable for the constant of integration
+Context()->variables->add(D=>'Real'); #Add another variable for the constant of integration
+
+
+$acceleration = Formula("-9.8"); #declare a formula
+$velocity = Formula("[$acceleration]t + C");
+$position = Formula("([$acceleration]/2)*t*t + Ct + D");
+
+
+#(button options, answer, last option)
+$partB = RadioButtons(
+    ["The initial acceleration", "The initial position", "The initial velocity", "None of these"],
+    "The initial velocity", 
+    last=>["None of these"]
+);
+
+#(button options, answer, last option)
+$partD = RadioButtons(
+    ["The initial acceleration", "The initial position", "The final velocity", "None of these"],
+    "The initial position", 
+    last=>["None of these"]
+);
+
+
+#Part A of the problem
+BEGIN_PGML
+
+    Section 5-4 Problem 54:
+
+Near the surface of the Earth, the acceleration due to gravity is virtually constant at 
+[`[$acceleration] \frac{m}{s^2}`] . The acceleration due to gravity can be modeled by the
+following equation: [`a(t) = [$acceleration]`]. Keep in mind that [`\frac{d}{dt} [v(t)] = v'(t) = a(t)`]
+
+    a). Since [`v'(t) = -9.8`], use the indefinite integral to write a formula for v(t). 
+    Make sure to use 'C' as your constant of integration and t as your independant variable.
+
+            [`v(t) = `] [_____________]{$velocity}
+
+END_PGML
+
+BEGIN_TEXT 
+$BR $BR 
+END_TEXT
+
+#Part B of the problem
+BEGIN_PGML
+
+    b). What does the [`+C`] in your formula mean in this context?
+            [@ $partB->buttons() @]*
+
+END_PGML
+ANS($partB->cmp());
+
+BEGIN_TEXT
+$BR $BR
+END_TEXT
+
+#Part C of the problem
+BEGIN_PGML
+
+    c). Since [`y'(t)= v(t)`], use the indefinite integral to write a formula for [`y(t)`].
+    Use [`D`] as the constant of integration for this integral.
+
+            [`y(t) = `] [_____________]{$position}
+
+END_PGML
+
+BEGIN_TEXT 
+$BR $BR 
+END_TEXT
+
+#Part D of the problem
+BEGIN_PGML
+    d). You saw another constant of integration in part c, [`D`]. What does the constant mean in this context?
+            [@ $partD-> buttons() @]*
+
+END_PGML
+ANS($partD->cmp());
+
+
+BEGIN_PGML_HINT
+
+    The general integral rule:  
+    [`\int f'(x)dx = f(x) + C`]
+
+END_PGML_HINT
+
+$halfAcceleration = $acceleration / 2;
+
+BEGIN_PGML_SOLUTION
+a). Acceleration is the the change in velocity over time. This means that a function modeling acceleration of an object can be obtained 
+    by finding the derivative of the velocity function. In this case, the function for acceleration is given. In order to find the velocity 
+    function, the anti-derivative or integral of the acceleration function will yield a function modeling velocity. To solve this, the equation
+    is as follows: 
+        [`v(t) = \int a(t)dt `]  
+    Since [`a(t) = [$acceleration]`]  
+        [`v(t) = \int ([$acceleration])dt`]  
+
+        [`v(t) = \int ([$acceleration]*t^0) dt`] 
+
+        [`v(t) = \frac{([$acceleration]*t^{0+1})}{0+1} + C`]  
+
+        [`v(t) = [$acceleration]t + C `]  
+
+b). [`C`] represents the initial velocity of a given projectile. Try finding the velocity at [`t = 0`]. This will leave you with [`v(0) = C`].
+This is how we model problems that have initial conditions.
+
+c). Velocity is the the change in position over time. This means that a function modeling velocity of an object can be obtained 
+    by finding the derivative of the position function. In this case, the function for velocity has already been found by taking the integral
+    of the acceleration. In order to find the position function, taking the anti-derivative of the velocity function will yield 
+    a function modeling position. To solve this, use the velocity equation that what was found in part 1:
+
+        [`v(t) = [$acceleration]t + C `]  
+     
+        [`y(t) = \int ([$acceleration]*t + C)dt`]  
+
+        [`y(t) = \int ([$acceleration]*t^1 + C*t^0) dt`]  
+
+        [`y(t) = \frac{([$acceleration]*t^{1+1})}{1+1} + \frac{Ct^{0+1}}{0+1} + D`]  
+
+        [`y(t) = [$halfAcceleration]t^{2} + Ct + D`] 
+
+            * Note: [`C`] is not to be treated as a variable. [`C`] is an arbitray constant, therefore it can be treated the same as 
+            any other number.
+            * Note: [`y(t)`] is used to represent position in this context since gravity does not influence objects in the x-direction, only in the 
+            y-direction.
+
+d).[`D`] represents the initial position of a given projectile. Try finding the position at [`t = 0`]. This will leave you with [`y(0) = D`].
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
