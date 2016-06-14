@@ -1,0 +1,125 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5-4')
+## Problem1('58')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+
+TEXT("(1 pt) ", $BBOLD, "Solving Definit Integrals", $EBOLD, $BR, $BR);
+
+$context = Context("Numeric");                 #Get the context of the Problem
+Context()->variables->add(t=>'Real');          #Add a variable for time to the context
+
+#Problem can be easily randomized if desired.
+$constant = -20;                                          #Initial value of the function
+$constant2 = 10;                                          #The value to be included in the exponential
+$voltChange = Formula("[$constant]*e^(-t/[$constant2])"); #formula to be used for the problem
+$lowerBound = 0;                                          #lower bound of integration
+$upperBound = 2;                                          #upper bound of integration
+
+$solution = $constant * $constant2 * (exp(-$upperBound / $constant2) - exp(-$lowerBound / $constant2));
+
+#Display the problem
+BEGIN_PGML
+
+Section 5-4 Problem 58:
+
+    Due to the permeability of a cell with certain ions, we often model the electric properties of organic cells with RC-circuits.
+    In one such model, the voltage across the cell wall changes at the rate modeled by the following equation:
+        
+        [`V'(t) = [$voltChange]`]   [` mV/seconds`]
+
+    What is the net change in voltage across the cell wall between [` t = [$lowerBound] `] and [` t = [$upperBound] `] seconds?
+
+        [____________]{$solution} [`mV`]
+
+END_PGML
+
+
+BEGIN_PGML_HINT
+    Use [`u`] substitution where [`u = \frac{-t}{[$constant2]}`]
+END_PGML_HINT
+
+$c1timesc2 = $constant * $constant2;
+$c1c2Neg = $c1timesc2 * -1;
+
+$upperDivByConstant2 = $upperBound / $constant2;
+$lowerDivByConstant2 = $lowerBound / $constant2;
+
+
+BEGIN_PGML_SOLUTION
+    First we must set up the integral:
+
+        [`\int_{[$lowerBound]}^{[$upperBound]} [$constant]e^{\frac{-t}{[$constant2]}} dt`]
+
+    Next, simplify the integral:
+
+        [`[$constant] \int_{[$lowerBound]}^{[$upperBound]} e^{\frac{-t}{[$constant2]}} dt`]
+
+    Next determine the value to be used for [`u`] - substitution:
+
+        [`u = \frac{-t}{[$constant2]}`]  
+
+        [`du = \frac{-1}{[$constant2]} dt`]  
+
+        [`dt = \frac{[$constant2]}{-1} du`]  
+
+        [`dt = -[$constant2] du`]  
+
+
+    Now make the substitutions into the integral:
+
+        [`[$constant] \int_{[$lowerBound]}^{[$upperBound]} e^{u} du * -[$constant2]`]
+    
+    Simplify again:
+
+        [` (-[$constant2])([$constant]) \int_{[$lowerBound]}^{[$upperBound]} e^{u} du`]
+
+    Integrate:
+
+        [` = (-[$constant2])([$constant]) [e^{u}] \Big|_[$lowerBound]^[$upperBound]`]
+
+    Simplify:
+
+        [` = -([$c1timesc2]) [e^{u}] \Big|_[$lowerBound]^[$upperBound]`]
+
+    Substitute for [`u`] and solve:
+
+        [` = [$c1c2Neg] [e^{\frac{-t}{[$constant2]}}] \Big|_[$lowerBound]^[$upperBound]`]  
+
+        [` = [$c1c2Neg] [e^{-[$upperDivByConstant2]} - e^{-[$lowerDivByConstant2]}]`]
+
+        [`= [$solution]`]
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
