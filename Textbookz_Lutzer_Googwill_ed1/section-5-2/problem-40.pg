@@ -1,0 +1,73 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5-2')
+## Problem1('44')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+TEXT("(1 pt) ", $BBOLD, "Numerical Methods of Integration: Simpson's Rule", $EBOLD, $BR, $BR);
+
+Context("Numeric");
+
+#Define a uppercase delta symbol
+$delta = "\(\displaystyle \Delta \)";
+
+
+BEGIN_TEXT
+      Use Simpson's method with $delta t = 1 to estimate the total bit traffic over the network in 10 minutes shown in the following figure.
+END_TEXT
+
+$column1 = PGML::Format(<<END_PGML); #The first column will contain everything up until the next END_PGML tag
+    
+    Bit traffic: [________________]{42.5} Mb
+   
+END_PGML
+
+$column2 = image("/problem-39.jpg", width=>300, tex_size=>700); #The second column will contain the image corresponding to this problem.
+
+TEXT(ColumnTable($column1, $column2)); #Display the two columns in the desired order.
+
+
+BEGIN_HINT
+
+$PAR
+Simpson's rule provides a slightly better approximation of the area beneath a curve compared to the trapezoid rule. The formula for Simpson's rule is shown below. In the case of this problem, $delta t is used to represent $delta x of Simpson's rule.
+
+$BR $BR
+
+\({\int_{a}^{b} f(x) \approx \frac{\Delta x}{3}(y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + ... + 4y_{n-1} + y_n) \)
+
+$BR $BR
+
+Where \(y_0\) is the point in which the line touches the y-axis, \(y_1\) is the y-value at \(x = 1\) and so forth.
+
+END_HINT
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
