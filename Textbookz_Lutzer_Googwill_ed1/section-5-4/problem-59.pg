@@ -1,0 +1,200 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5-4')
+## Problem1('59')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"parserRadioButtons.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+
+TEXT("(1 pt) ", $BBOLD, "Solving Definit Integrals", $EBOLD, $BR, $BR);
+
+$context = Context("Numeric");                 #Get the context of the Problem
+Context()->variables->add(t=>'Real'); #Add a variable for time to the context
+
+#Problem can be easily randomized if desired.
+$c = -0.5;                                                #Initial value of the function, c stands for constant
+$a = -0.1;                                                #The value to be included in the exponential
+$coolingRate = Formula("[$c]*e^([$a]*t)");                #formula to be used for the problem
+$lowerBound = 0;                                          #lower bound of integration
+$upperBound = 60;                                         #upper bound of integration
+
+#Find the definite integral between two bounds --> This is evaluating definite integral for T'(t)
+$temperature = ($c / $a) * (exp($upperBound * $a) - exp($lowerBound * $a));
+
+
+#Variables for Part B:
+#Find time to arrive at certain temperature
+$targetTemp = 81;               #Temp we are looking for
+$initialTemp = 85;              #The initial temperature of the computer
+$initialCondition = ($c / $a);  #The constant 'I' in 'Ie^($a*t)' in T(t)
+
+
+#Solve for the constant of integration 'C' using the initial temperature: T(t) = initialCondition * e^(a * t) + C
+#T(0) = initialTemp --> initialCondition * e^0 + C = initialTemp --> C = initialTemp - initialCondition
+$constantOfIntegration = $initialTemp - $initialCondition;
+$timeToReachTargetTemp = log(($targetTemp - $constantOfIntegration) / ($initialCondition)) / ($a);
+
+#############################################################
+# Part A of the problem
+#############################################################
+BEGIN_PGML
+
+Section 5-4 Problem 59:
+
+    Suppose a computer chip cools at a the following rate after the machine is turned off:
+        
+        [`T'(t) = [$coolingRate]`]      [` F^{\circ} / seconds`]
+
+    a). What is the net change in the chip's temperature during the first minute after the machine is turned off?
+
+        [____________]{$temperature} [`F^{\circ}`]  
+
+END_PGML
+
+
+#############################################################
+# Part B of the problem
+#############################################################
+BEGIN_PGML
+
+    Solution b is: 
+    [$timeToReachTargetTemp]
+
+    b). If the chip's operating system is [`85 F^{\circ}`] how long does it take to cool down to [`[$targetTemp] F^{\circ}`]?
+
+        [____________]{$timeToReachTargetTemp} [`seconds`]
+
+END_PGML
+
+
+#############################################################
+# Hint for the problem
+#############################################################
+BEGIN_PGML_HINT
+    Use [`u`] substitution where [`u = [$a]t`]
+END_PGML_HINT
+
+
+#Variables to help with displaying the solution to the student 
+$cDividedBya = $c / $a;
+$upperBoundTimes_a = $upperBound * $a;
+$lowerBoundTimes_a = $lowerBound * $a;
+
+$tempTemp = $targetTemp - $constantOfIntegration;
+
+
+#############################################################
+# Solution to the problem.
+# Author: Justin Gagne
+#############################################################
+BEGIN_PGML_SOLUTION
+
+a). Solution
+
+    First we must set up the integral:
+
+        [`\int_{[$lowerBound]}^{[$upperBound]} [$c]e^{\frac{-t}{[$a]}} dt`]
+
+    Next, simplify the integral:
+
+        [`[$c] \int_{[$lowerBound]}^{[$upperBound]} e^{[$]t} dt`]
+
+    Next determine the value to be used for [`u`] - substitution:
+
+        [`u = [$a]t`]  
+
+        [`du = [$a]dt`]  
+
+        [`dt = \frac{1}{$a} du`]  
+
+    Now make the substitutions into the integral:
+
+        [`[$c] \int_{[$lowerBound]}^{[$upperBound]} e^{u} du * \frac{1}{[$a]}`]
+    
+    Simplify again:
+
+        [`([$c])*(\frac{1}{[$a]}) \int_{[$lowerBound]}^{[$upperBound]} e^{u} du`]
+
+    Integrate and simplify:
+
+        [` = \frac{[$c]}{[$a]} [e^{u}] \Big|_{[$lowerBound]}^{[$upperBound]}`]
+
+    Substitute for [`u`] and solve:
+
+        [` = [$cDividedBya] [e^{[$a]t}] \Big|_{[$lowerBound]}^{[$upperBound]}`]  
+
+        [` = [$cDividedBya] [e^{[$upperBoundTimes_a]} - e^{[$lowerBoundTimes_a]}]`]
+
+        [`= [$temperature]`] [`F^{\circ}`]  
+
+
+b). Solution
+
+    To begin this, we must first find the constant of integration. At this point we have already found the temperature equation.
+
+        [`T(t) = \frac{[$c]}{[$a]}e^{[$a]t} + C`]
+    
+    We are given the initial temperature. This means that [`T(0) = [$initialTemp]`]. Now we must solve for C by setting [`t = 0`].
+
+        [`\frac{[$c]}{[$a]}e^{[$a]t} + C = [$initialTemp]`]
+
+        [`[$initialCondition]e^{0} + C = [$initialTemp]`]
+
+        [`C = [$initialTemp] - [$initialCondition]`]
+
+        [`C = [$constantOfIntegration]`]
+
+    Now substitute this value into [`T(t)`].
+
+        [`T(t) = [$initialCondition]e^{[$a]t} + [$initialCondition]`]
+
+    Now we can set [`T(t)`] equal to the Target Temperature [`T(t) = [$targetTemp]`] and solve for [`t`]
+
+        [`[$initialCondition]e^{[$a]t} + [$constantOfIntegration] = [$targetTemp]`]
+
+        [`[$initialCondition]e^{[$a]t} = [$targetTemp] - [$constantOfIntegration]`]
+    
+        [`[$initialCondition]e^{[$a]t} = [$tempTemp]`]
+
+        [`e^{[$a]t} = \frac{[$tempTemp]}{[$initialCondition]}`]
+
+        [`ln(e^{[$a]t}) = ln(\frac{[$tempTemp]}{[$initialCondition]})`]
+
+        [`[$a]t = ln(\frac{[$tempTemp]}{[$initialCondition]})`]
+
+        [`t = ln(\frac{[$tempTemp]}{[$initialCondition]}) / [$a]`]
+
+        [`t = [$timeToReachTargetTemp] seconds`] 
+
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
