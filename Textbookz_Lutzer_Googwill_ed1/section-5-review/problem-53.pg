@@ -1,0 +1,117 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5 Review')
+## Problem1('53')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"parserRadioButtons.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+
+TEXT("(1 pt) ", $BBOLD, "Solving Definite Integrals", $EBOLD, $BR, $BR);
+
+$context = Context("Numeric");                 #Get the context of the Problem
+Context()->variables->add(t=>'Real'); #Add a variable for time to the context
+Context()->variables->add(C=>'Real'); #Add a variable for time to the context
+
+
+#############################################################
+# For an understanding of the math computations, the formula
+# used has been generalized to be in the form of T'(t) = At + B.
+# Part A of the problem
+#############################################################
+
+$A = 0.3;
+$B = 1;
+
+$dT = Formula("[$A]t + [$B]");                      #dT/dt, Rate of change in temperature
+$T  = Formula("([$A]t^2)/2 + [$B]t + C");
+
+#Find the initial temperature
+$targetTemp = 62;                   #Temp we are looking for
+$time = 10;                         #Time the temperature occurs at
+$initTime = 0;                      #Inital time (t = 0)
+
+#Solve for the constant of integration: 
+$C = $targetTemp - $A*$time*$time*(1/2) - $B*$time;
+
+#Solve for the initial temperature
+$initialTemp = $A*$initTime*$initTime*(1/2) + $B*$initTime + $C;
+
+#############################################################
+# Part A of the problem
+#############################################################
+BEGIN_PGML
+
+Section 5 Review Problem 53:
+
+    Suppose the temperature of an object changes at the following rate: 
+        
+        [`T'(t) = [$dT]`]      [` F^{\circ} / minute`]
+
+    If the object's temperature is [$targetTemp] after [$time] minutes, what was its initial temperature?
+
+        [`T(0) = `][____________]{$initialTemp} [`F^{\circ}`]  
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+1). Find the integral of the [`T'(t) = [$dT]`]
+
+    [`\int ([$dT]) dt`]  
+
+    [` = \int [$A]t^{1}dt + \int [$B]t^{0}dt`]  
+
+    [` = [$A]\frac{t^{1+1}}{1+1} + [$B]\frac{t^{0 + 1}}{0+1} + C`]  
+
+    [` = \frac{[$A]}{2}t^{2} + [$B]t^{1} + C`]    
+
+    [` = [$T]`]    
+
+2). Solve for C using the given initial condition: [`t = [$time]`] and [`T([$time]) = [$targetTemp]`]
+
+    [`[$T] = [$targetTemp]`] when [`t = [$time]`]
+
+    [` -> \frac{[$A]}{2}([$time])^{2} + [$B]([$time]) + C = [$targetTemp]`]
+
+    [` -> C = [$targetTemp] - \frac{[$A]}{2}([$time])^{2} - [$B]([$time]) `]
+
+    [` -> C = [$C] `]
+
+3). Solve for [`T([$initTime])`]
+
+    [` T(0) = \frac{[$A]}{2}([$initTime])^{2} + [$B]([$initTime]) + [$C]`]
+
+    [` T(0) = [$C]`]
+
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
