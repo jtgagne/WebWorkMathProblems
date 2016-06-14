@@ -1,0 +1,103 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5-3')
+## Problem1('41')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+TEXT("(1 pt) ", $BBOLD, "Numerical Methods of Integration: Simpson's Rule", $EBOLD, $BR, $BR);
+
+Context("Numeric");
+
+#Define a uppercase delta symbol
+$delta = "\(\displaystyle \Delta \)";
+
+
+$column1 = PGML::Format(<<END_PGML); #The first column will contain everything up until the next END_PGML tag
+
+    Section 5-3 Problem 41:
+    
+    Estimate the volume enclosed by a guitar that is 4.25 inches deep. The guitar is shown in the corresponding image.
+
+    [________________]{1019.15} [`in^3`]
+    
+END_PGML
+
+$column2 = image("/problem-41.jpg", width=>300, tex_size=>700); #The second column will contain the image corresponding to this problem.
+
+TEXT(ColumnTable($column1, $column2)); #Display the two columns in the desired order.
+
+BEGIN_PGML_HINT 
+    Simpsons Formula is shown below: 
+
+
+    [`{\int_{a}^{b} f(x) \approx \frac{\Delta x}{3}(y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + ... + 4y_{n-1} + y_n)`]  
+      
+    In the context of the problem: [`y_0 = 0, y_1 = 13 `] and so forth.  
+
+END_PGML_HINT
+
+
+BEGIN_SOLUTION
+
+Simpson's rule: 
+
+    \({\int_{a}^{b} f(x) \approx \frac{\Delta x}{3}(y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + ... + 4y_{n-1} + y_n) \)$BR$BR
+    
+    Where \(\Delta x = \frac{b-a}{n}\),  b is the upper bound, a is the lower bound, and n is the number of sections.$BR$BR  
+    
+    In this case we are given \(\Delta x = 2\) which can be confirmed by considering the left-most part of the guitar to be 
+    x = 0. Since we are told each section partitioned on the guitar is 2, we can find n = 10 and the right most part of the 
+    guitar is at x = 20.$BR
+    
+    $BR First we must identify all the y-values to be used in Simpson's formula :$BR  
+        \(y_0\) = 0, \(y_1\) = 13, \(y_2\) = 15.6, \(y_3\) = 15.75, ... , \(y_{10}\) = 0 $BR
+        
+    $BR Once all y-values are identified, Simpson's rule can be simplified to the following equation:$BR
+        \({\int_{a}^{b} f(x) \approx \frac{\Delta x}{3}(y_0 + 4(y_1 + y_3 + ... ) + 2(y_2 + y_4 + ... ) + y_n) \)$BR
+        
+    $BR From here, it is possible to substitute all y-values from the guitar:$BR
+        \({\int_{a}^{b} f(x) \approx \frac{\Delta x}{3}(0 + 4(13 + 15.75 + 12.75 + 11 + 11) + 2(15.6 + 14.75 + 11.25 + 11.25) + 0)\)$BR
+        
+    $BR Next substitute for \(\Delta x \)$BR
+        \({\int_{a}^{b} f(x) \approx \frac{2}{3}(0 + 4(13 + 15.75 + 12.75 + 11 + 11) + 2(15.6 + 14.75 + 11.25 + 11.25) + 0)\)$BR
+
+    $BR Next solve:$BR
+        \(\frac{2}{3}(4(63.5) + 2(52.85))\)$BR
+        \( = \frac{2}{3}(359.7)\) $BR
+        \( = 239.8 in^2\) $BR
+        
+    $BR Since the problem calls for the volume of the guitar, this area must be multiplied by the depth of the guitar:$BR
+        \(239.8 * 4.25 = 1019.15 in^3\) $BR $BR
+        
+
+END_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
