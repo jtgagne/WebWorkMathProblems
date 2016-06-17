@@ -1,0 +1,82 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5-2')
+## Problem1('44')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"parserRadioButtons.pl"             #Include this to allow for multiple choiuce problems using the Radio Button Object 
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+TEXT("(1 pt) ", $BBOLD, "Interpreting the Meaning of a Graph", $EBOLD);
+$showPartialCorrectAnswers = 0;
+
+$radioButton = RadioButtons(
+    ["Red", "Blue", "Green", "None of these"],
+    "Red", #Correct answer
+    last => ["None of these"], #Can be a list
+);
+
+$column1 = PGML::Format(<<END_PGML); #The first column will contain everything up until the next END_PGML tag
+
+Suppose a security guard enters a hallway through a door. He walks the hallway,
+and returns to the door whence he entered. Determine which of the graphs in the
+right-hand image of Figure 2.15 most likely depicts his velocity 
+(ft/min) during that tour of the hallway. 
+
+END_PGML
+
+$column2 = image("/problem-44.png", width=>700, tex_size=>800); #The second column will contain the image corresponding to this problem.
+
+TEXT(ColumnTable($column1, $column2)); #Display the two columns in the desired order.
+
+#Display the Radio button widget below the text and the image
+BEGIN_PGML
+[@ $radioButton -> buttons() @]*
+END_PGML
+
+#  Answer evaluation
+
+install_problem_grader(~~&std_problem_grader); #Not required
+
+$showPartialCorrectAnswers = 0;
+
+ANS( $radioButton->cmp() );
+
+###################################################
+# The solution to the problem
+###################################################
+BEGIN_PGML_SOLUTION
+The correct answer is [$radioButton->correct_ans()].  
+Since the graph depicts the velocity of the guard, the area underneath the graph represents the distance that the guard traveled. 
+Initially the guard has a negative velocity, meaning the guard is traveling in a negative direction relative to the x-axis. When the 
+velocity becomes positive (the red line crosses the x-axis into the 1st quardant) the guard has changed his direction and is now walking 
+in the positive direction relative to the x-axis. Since the sum of the area below the curve of the red line can be estimated to sum to roughly 0, it is correct 
+to assume that the he has returned to his initial position. 
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
