@@ -2,6 +2,21 @@
 ## Calculus
 ## ENDDESCRIPTION
 
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5-2')
+## Problem1('43')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
 ## KEYWORDS('definite' 'integral','Calculus', 'Riemann Integral','integrals', 'definite', 'integrals', 'integration', 'definite integrals','integration')
 
 DOCUMENT();        # This should be the first executable line in the problem.
@@ -16,15 +31,27 @@ loadMacros(
 
 loadMacros("PGML.pl","unionTables.pl");
 
-TEXT(beginproblem(), $BR, $BBOLD, "Estimating the Area Under a Curve", $EBOLD);
+#Allow for variance in the solution
+Context()->flags->set(
+  tolerance => 2,
+  tolType => "absolute",
+);
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Area and the Definite Integral", $EBOLD);
 $showPartialCorrectAnswers = 0;
 
+#Break the problem into two columns to be displayed
 $column1 = PGML::Format(<<END_PGML);
 
-Suppose the velocity of a flock of migrating birds is f(t), the graph of which is shown in the image 2.15. 
+Section 5-2 Problem 43
 
-(a) Approximate the distance traveled by the flock during the seven-hour time period shown: 
-[______________________________]{135}
+    Suppose the velocity of a flock of migrating birds is v(t), the graph of which is shown in the image 2.15. 
+
+
+Approximate the distance traveled by the flock during the seven-hour time period shown: 
+
+    [_____________________]{135} miles
 
 END_PGML
 
