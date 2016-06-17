@@ -12,7 +12,7 @@
 ## AuthorText1('Carl V. Lutzer')
 ## AuthorText2('H.T. Goodwill')
 ## Section1('5-4')
-## Problem1('59')
+## Problem1('49')
 ## Author('Carl V. Lutzer')
 ## Author('H.T. Goodwill')
 ## Institution('Wentworth Institute of Technology')
@@ -34,7 +34,7 @@ loadMacros(
 loadMacros("PGML.pl","unionTables.pl");
 
 
-TEXT("(1 pt) ", $BBOLD, "Solving Definit Integrals", $EBOLD, $BR, $BR);
+TEXT("(1 pt) ", $BBOLD, "Solving Definite Integrals", $EBOLD, $BR, $BR);
 
 $context = Context("Numeric");                 #Get the context of the Problem
 Context()->variables->add(t=>'Real'); #Add a variable for time to the context
@@ -196,5 +196,6 @@ b). Solution
 
 
 END_PGML_SOLUTION
+
 
 ENDDOCUMENT();        # This should be the last executable line in the problem.

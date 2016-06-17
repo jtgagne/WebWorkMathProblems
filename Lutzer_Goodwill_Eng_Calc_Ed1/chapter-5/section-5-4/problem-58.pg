@@ -28,15 +28,16 @@ loadMacros(
 "PGanswermacros.pl",
 "PGauxiliaryFunctions.pl",
 "MathObjects.pl",
+"parserRadioButtons.pl"
 );
 
 loadMacros("PGML.pl","unionTables.pl");
 
 
-TEXT("(1 pt) ", $BBOLD, "Solving Definit Integrals", $EBOLD, $BR, $BR);
+TEXT("(1 pt) ", $BBOLD, "Solving Definite Integrals", $EBOLD, $BR, $BR);
 
 $context = Context("Numeric");                 #Get the context of the Problem
-Context()->variables->add(t=>'Real');          #Add a variable for time to the context
+Context()->variables->add(t=>'Real'); #Add a variable for time to the context
 
 #Problem can be easily randomized if desired.
 $constant = -20;                                          #Initial value of the function
@@ -44,7 +45,6 @@ $constant2 = 10;                                          #The value to be inclu
 $voltChange = Formula("[$constant]*e^(-t/[$constant2])"); #formula to be used for the problem
 $lowerBound = 0;                                          #lower bound of integration
 $upperBound = 2;                                          #upper bound of integration
-
 $solution = $constant * $constant2 * (exp(-$upperBound / $constant2) - exp(-$lowerBound / $constant2));
 
 #Display the problem

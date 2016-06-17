@@ -11,8 +11,8 @@
 ## EditionText1('1')
 ## AuthorText1('Carl V. Lutzer')
 ## AuthorText2('H.T. Goodwill')
-## Section1('5-2')
-## Problem1('44')
+## Section1('5-3')
+## Problem1('40')
 ## Author('Carl V. Lutzer')
 ## Author('H.T. Goodwill')
 ## Institution('Wentworth Institute of Technology')
@@ -36,13 +36,19 @@ TEXT("(1 pt) ", $BBOLD, "Numerical Methods of Integration: Simpson's Rule", $EBO
 
 Context("Numeric");
 
-#Define a uppercase delta symbol
-$delta = "\(\displaystyle \Delta \)";
+#Allow for variance in the solution
+Context()->flags->set(
+  tolerance => 2,
+  tolType => "absolute",
+);
 
 
-BEGIN_TEXT
-      Use Simpson's method with $delta t = 1 to estimate the total bit traffic over the network in 10 minutes shown in the following figure.
-END_TEXT
+BEGIN_PGML
+Section 5-3 Problem 40
+
+      Use Simpson's method with [`\Delta t = 1`] to estimate the total bit traffic over the network in 10 minutes shown in the following figure.
+    
+END_PGML
 
 $column1 = PGML::Format(<<END_PGML); #The first column will contain everything up until the next END_PGML tag
     
@@ -55,19 +61,17 @@ $column2 = image("/problem-39.jpg", width=>300, tex_size=>700); #The second colu
 TEXT(ColumnTable($column1, $column2)); #Display the two columns in the desired order.
 
 
-BEGIN_HINT
+BEGIN_PGML_HINT
 
-$PAR
-Simpson's rule provides a slightly better approximation of the area beneath a curve compared to the trapezoid rule. The formula for Simpson's rule is shown below. In the case of this problem, $delta t is used to represent $delta x of Simpson's rule.
+Simpson's rule provides a slightly better approximation of the area beneath a curve compared to the trapezoid rule. 
+The formula for Simpson's rule is shown below. In the case of this problem, [`\Delta t`] corresponds to the [`\Delta x`]
+used in Simpson's rule.
 
-$BR $BR
+[`{\int_{a}^{b} f(x) \approx \frac{\Delta x}{3}(y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + ... + 4y_{n-1} + y_n)`]
 
-\({\int_{a}^{b} f(x) \approx \frac{\Delta x}{3}(y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + ... + 4y_{n-1} + y_n) \)
 
-$BR $BR
+Where [`y_{0}`] is the point in which the line touches the y-axis, [`y_{1}`] is the y-value at [`x = 1`] and so forth.
 
-Where \(y_0\) is the point in which the line touches the y-axis, \(y_1\) is the y-value at \(x = 1\) and so forth.
-
-END_HINT
+END_PGML_HINT
 
 ENDDOCUMENT();        # This should be the last executable line in the problem.
