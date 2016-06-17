@@ -1,0 +1,134 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5 Review')
+## Problem1('56')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"parserRadioButtons.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+TEXT("(1 pt) ", $BBOLD, "Solving Initial Value Problems", $EBOLD, $BR, $BR);
+Context()->flags->set(
+  tolerance => 0.1,
+  tolType => "absolute",
+);
+
+$context = Context("Numeric");                 #Get the context of the Problem
+Context()->variables->add(t=>'Real');          #Add a variable for time to the context
+
+#Problem can be easily randomized if desired.
+$a = -2;                                                #Initial value of the function, c stands for constant
+$b = -2;
+$dV = Formula("[$a]e^([$b]t)");                         #formula to be used for the problem
+
+$initialVolume = 4;
+$finalTime = 3;
+$initialTime = 0;
+
+#Derived equation to be generalized 
+$C = $initialVolume - ($a/$b);
+
+#Compute the answer using the tolerance defined in the Context above
+$ans = Compute(($a/$b)*exp($b*$finalTime) + $C);
+
+
+#############################################################
+# Start the problem
+#############################################################
+BEGIN_PGML
+
+Section 5 Review Problem 56:
+
+    A tank is leaking fluid so that the volume is changing at a rate of [`[$dV]`] gallons per minute. If the tank originally
+    contained [$initialVolume] gallons of fluid, how much fluid remains after [$finalTime] minutes?
+        
+        [`V(3) = `] [____________]{$ans} gallons  
+
+END_PGML
+
+$u = Formula("[$b]t");
+$du = Formula("[$b]");
+$S = $a/$du;
+$E = $initialTime*$b;
+$F = $finalTime * $b;
+
+#############################################################
+# Solution to the problem.
+# Author: Justin Gagne
+#############################################################
+BEGIN_PGML_SOLUTION
+    First begin by setting up the integral:
+
+        [`\int [$dV]dt`]
+
+        [`([$a])\int e^{[$b]t}dt`]
+
+    Use the exponent value for u substitution:
+
+        [`u = [$u]`]
+
+        [`du = [$du]dt`]
+
+        [`dt = \frac{du}{[$du]}`]
+
+    Make the substitution and then simplify:
+
+        [`V(t) = ([$a])\int e^{u}(\frac{du}{[$du]})`]
+
+        [`V(t) = (\frac{[$a]}{[$du]})\int e^{u}du`]
+
+        [`V(t) = [$S](e^{u}) + C`]
+
+        [`V(t) = [$S](e^{[$u]}) + C`]
+
+    Solve for C using the initial condition: [`V(0) = 4`]
+
+        [`V(0) = 4 = [$S](e^{([$initialTime]) * ([$b])}) + C`]
+
+        [`V(0) = 4 = [$S](e^{[$E]}) + C`]
+
+        [`C = 4 - [$S](e^{[$E]})`]
+
+        [`C = 4 - [$S](e^{[$E]})`]
+
+        [`C = [$C]`]
+
+        [`V(t) = [$S](e^{[$u]}) + [$C]`]
+
+    Now solve for [`t = [$finalTime]`]
+
+        [`V([$finalTime]) = [$S](e^{([$finalTime]) * ([$b])}) + [$C]`]
+
+        [`V([$finalTime]) = [$S](e^{[$F]}) + [$C]`]
+
+        [`V([$finalTime]) = [$ans]`]
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
