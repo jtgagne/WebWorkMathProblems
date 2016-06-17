@@ -1,0 +1,81 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('6-1')
+## Problem1('117')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'Riemann Integral','integrals', 'definite', 'integrals', 'integration', 'definite integrals','integration')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+Context()->variables->add(t=>'Real'); #Add a variable for time to the context
+
+#Allow for variance in the solution
+Context()->flags->set(
+  tolerance => 2,
+  tolType => "absolute",
+);
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Substitution", $EBOLD);
+$showPartialCorrectAnswers = 0;
+
+
+BEGIN_PGML
+
+Section 6-1 Problem 117
+
+    Suppose an ion is [`y`] meters above the center of a charged disk of radius [`R`] meters, as depicted in the picture shown below.
+    If the disk has a uniform charge density of [`\sigma `] coulombs per meter squared [`C / m^{2}`], a ring of radius [`r`], and width
+    of [`\Delta r`], the disk is known to have: 
+    
+        >>[`2\pi r(\Delta r)\sigma`] coulombs of charge.<<
+
+    If the ion has a charge of [`q`] the disk attracts (repels) the ion toward (from) the disk with a vertical force of approximately
+
+        >>[`\frac{1}{4\pi \epsilon_0}  `][`  \frac{2 \pi \sigma q r}{(y^{2} + r^{2})^{\frac{3}{2}}} \Delta r`]<<
+
+    where [`\epsilon_0`] is called the _permittivity constant_. (We say _approximately_ because not all of the charge is exactly r 
+    units away from the center.)
+
+        a). Write a Riemann sum with n-intervals that approximates the cumulative vertical force on the ion due to the entire disk.
+
+            [`\sum_{k=1}^{n}`][_______________________________]{5}
+
+        b). Limiting [`n \to 0`] in part (a) leads us to a definite integral. Write the integral that calculates the cumulative
+        force experienced by the ion due to the charged disk.
+
+            [`F(y) = \int_{0}^{R}`] [____________________________]{4}
+
+        c). Calculate the value of the integral from part (b). Your answer will include the constants [`R, y, \sigma, \pi, \epsilon_0,`] and [`q`].
+
+            [`F(y) = `] [______________________________]{3} newtons.
+
+
+END_PGML
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
