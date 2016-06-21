@@ -1,0 +1,193 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('6-2')
+## Problem1('69')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'Riemann Integral','integrals', 'definite', 'integrals', 'integration', 'definite integrals','integration')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+Context()->variables->add(t=>'Real'); #Add a variable for time to the context
+
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Integration by Parts", $EBOLD);
+$showPartialCorrectAnswers = 0;
+
+$a = -1/5;
+$b = 3;
+$t = 0;                                     #initial time t = 0
+$QatZero = 1;                               #Charge at time = 0
+$dQ = Formula("e^([$a]t)(cos([$b]t))");     #u = e^([$a]t), dv = (cos([$b]t))
+$initialCondition = 1;
+
+#solve for the constant of integeration
+$FirstIntegral = (1/$b)*exp($a*$t)*sin($b*$t);              #Initial value of the integration by parts 
+$SecondIntegral = (-$a/$b)*(-1/$b)*exp($a*$t)*cos($b*$t);    #value of the integral of integral of v*du
+$C = $QatZero - ($FirstIntegral + $SecondIntegral)/(1 + ($a*$a)/($b*$b));   #Solve for C 
+
+$ansFormula = Formula("(1/[$b])e^([$a]t)sin([$b]t) + (-[$a]/[$b])*(-1/[$b])e^([$a]t)cos([$b]t) + [$C]");
+
+#Find out how to add an equation editor for the students 
+BEGIN_PGML
+
+Section 6-2 Problem 69
+
+    The charge on a capacitor in an LRC circuit varies according to the following function:
+        
+        [`Q'(t) = [$dQ]`] coulombs per second
+
+    Determine a formula for [`q(t)`] assuming the charge on the capacitor is initially [`Q(0) = 1`].
+
+        [`Q(t) = `] [__________________________________________________________________]{$ansFormula} coulombs
+
+END_PGML
+
+BEGIN_PGML_HINT
+    Keep computing the integral by parts until you see the following appear in your integral:
+        
+        [`\int [$dQ]`]
+    
+    Remember that [`Q(t) = \int \frac{dQ}{dt}`]
+
+END_PGML_HINT
+
+$aSquared = $a*$a;
+$aSquaredNeg = $aSquared * (-1);
+$bSquared = $b*$b;
+$adivb = $a/$b;
+$negAdivB = Compute("$adivb * (-1)")->with(
+  tolType => 'absolute',
+  tolerance => .01,
+);
+
+$CoefOfQ = Compute("$aSquared/$bSquared")->with(
+  tolType => 'absolute',
+  tolerance => .01,
+);
+
+$adivb = Compute("$a/$b")->with(
+  tolType => 'absolute',
+  tolerance => .01,
+);
+
+#############################################################
+# Solution to the problem.
+# Author: Justin Gagne
+#############################################################
+BEGIN_PGML_SOLUTION
+Integration by parts follows the following formula:
+    
+    [`\int u*dv = u*v - \int v*du`]
+
+Start by making the following substitutions for the given equation [`Q'(t) = [$dQ]`]:
+    
+    [`u = e^{[$a]t}`] and [`dv = cos([$b]t)`]
+
+Find [`du`] and [`v`]:
+
+    [`du = \frac{d}{dt}[e^{[$a]t}]`]
+
+    [`du = [$a]e^{[$a]t}dt`]
+
+    [`v = \int cos([$b]t) dt`]
+
+    [`v = \frac{1}{[$b]}sin([$b]t)`]
+
+Note that we do not yet need a constant of integration. Now make the substitutions into the integration by parts formula:
+
+    [`Q(t) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) - \int (\frac{1}{[$b]})sin([$b]t)*([$a])e^{[$a]t}dt`]
+
+Simplify the next integral:
+
+    [`Q(t) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) - (\frac{([$a])}{[$b]}) \int e^{[$a]t}sin([$b]t)dt`]
+
+Make the following substitutions for the next integral:
+    
+    [`u = e^{[$a]t}`] and [`dv = sin([$b]t)`]
+
+Find [`du`] and [`v`]:
+
+    [`du = \frac{d}{dt}[e^{[$a]t}]`]
+
+    [`du = [$a]e^{[$a]t}dt`]
+
+    [`v = \int sin([$b]t) dt`]
+
+    [`v = \frac{-1}{[$b]}cos([$b]t)`]
+
+Now make the substitutions into the second integral:
+
+    [`Q(t) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) - (\frac{[$a]}{[$b]})[ e^{[$a]t}(\frac{-1}{[$b]})cos([$b]t) - \int \frac{-1}{[$b]}cos([$b]t)*([$a])e^{[$a]t}dt]`]
+
+Simplify the integral:
+
+    [`Q(t) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) + ([$negAdivB])[ e^{[$a]t}(\frac{-1}{[$b]})cos([$b]t) - (\frac{-1}{[$b]})([$a]) \int e^{[$a]t}cos([$b]t)dt]`]
+            
+Notice that the next integral is the same as the given equation: [`\frac{dQ}{dt} = [$dQ]`]. Since [`Q(t) = \int \frac{dQ}{dt}`], we can 
+substitute [`Q(t) for \int [$dQ] dt`]. Otherwise this integral will keep going on forever.
+
+    [`Q(t) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) + ([$negAdivB])[ e^{[$a]t}(\frac{-1}{[$b]})cos([$b]t) - (\frac{-1}{[$b]})([$a])*Q(t)]`]
+
+Now it is possible to start simplifying and the integration portion is complete. 
+
+    [`Q(t) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) + ([$negAdivB])(\frac{-1}{[$b]})e^{[$a]t}cos([$b]t) - ([$negAdivB])(\frac{-1}{[$b]})([$a])*Q(t)`]
+
+    [`Q(t) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) + ([$negAdivB])(\frac{-1}{[$b]})e^{[$a]t}cos([$b]t) - ([$CoefOfQ])*Q(t)`]
+
+Get all terms containing [`Q(t)`] to the same side by adding [`([$CoefOfQ])*Q(t)`] to both sides
+
+    [`Q(t) + ([$CoefOfQ])*Q(t) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) + ([$negAdivB])(\frac{-1}{[$b]})e^{[$a]t}cos([$b]t)`]
+
+    [`Q(t)(1 + ([$CoefOfQ])) = \frac{1}{[$b]}e^{[$a]t}sin([$b]t) + ([$negAdivB])(\frac{-1}{[$b]})e^{[$a]t}cos([$b]t)`]
+
+Solve for [`Q(t)`]
+
+    [`Q(t)= \frac{\frac{1}{[$b]}e^{[$a]t}sin([$b]t) + ([$negAdivB])(\frac{-1}{[$b]})e^{[$a]t}cos([$b]t)}{(1 + ([$CoefOfQ]))}`]
+
+Don't forget the constant of integration:
+
+    [`Q(t)= \frac{\frac{1}{[$b]}e^{[$a]t}sin([$b]t) + ([$negAdivB])(\frac{-1}{[$b]})e^{[$a]t}cos([$b]t)}{(1 + ([$CoefOfQ]))} + C`]
+
+Solve for [`C`] using [`Q(0) = [$initialCondition]`]:
+
+    [`Q(0)= \frac{\frac{1}{[$b]}e^{[$a]*0}sin([$b]*0) + ([$negAdivB])(\frac{-1}{[$b]})e^{[$a]*0}cos([$b]*0)}{(1 + ([$CoefOfQ]))} + C`]
+
+    [`[$initialCondition] = \frac{[$FirstIntegral] + [$SecondIntegral]}{(1 + ([$CoefOfQ]))} + C`]
+
+    [`[$initialCondition] - \frac{[$FirstIntegral] + [$SecondIntegral]}{(1 + ([$CoefOfQ]))} = C`]
+
+    [`C = [$C]`]
+
+Therefore the solution is:
+
+    [`Q(t) = [$ansFormula] `]
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
