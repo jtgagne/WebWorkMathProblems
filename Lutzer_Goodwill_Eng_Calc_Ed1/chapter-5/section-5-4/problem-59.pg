@@ -38,6 +38,10 @@ TEXT("(1 pt) ", $BBOLD, "Solving Definite Integrals", $EBOLD, $BR, $BR);
 
 $context = Context("Numeric");                 #Get the context of the Problem
 Context()->variables->add(t=>'Real'); #Add a variable for time to the context
+Context()->flags->set(
+  tolerance => 0.1,
+  tolType => "absolute",
+);
 
 #Problem can be easily randomized if desired.
 $c = -0.5;                                                #Initial value of the function, c stands for constant
@@ -60,7 +64,7 @@ $initialCondition = ($c / $a);  #The constant 'I' in 'Ie^($a*t)' in T(t)
 #Solve for the constant of integration 'C' using the initial temperature: T(t) = initialCondition * e^(a * t) + C
 #T(0) = initialTemp --> initialCondition * e^0 + C = initialTemp --> C = initialTemp - initialCondition
 $constantOfIntegration = $initialTemp - $initialCondition;
-$timeToReachTargetTemp = log(($targetTemp - $constantOfIntegration) / ($initialCondition)) / ($a);
+$timeToReachTargetTemp = Compute(log(($targetTemp - $constantOfIntegration) / ($initialCondition)) / ($a));
 
 #############################################################
 # Part A of the problem
@@ -84,9 +88,6 @@ END_PGML
 # Part B of the problem
 #############################################################
 BEGIN_PGML
-
-    Solution b is: 
-    [$timeToReachTargetTemp]
 
     b). If the chip's operating system is [`85 F^{\circ}`] how long does it take to cool down to [`[$targetTemp] F^{\circ}`]?
 
