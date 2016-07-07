@@ -59,11 +59,11 @@ Section 5-4 Problem 58:
     Due to the permeability of a cell with certain ions, we often model the electric properties of organic cells with RC-circuits.
     In one such model, the voltage across the cell wall changes at the rate modeled by the following equation:
         
-        [`V'(t) = [$voltChange]`]   [` mV/seconds`]
+        [`V'(t) = [$voltChange]`]  mV/seconds
 
     What is the net change in voltage across the cell wall between [` t = [$lowerBound] `] and [` t = [$upperBound] `] seconds?
 
-        [____________]{$solution} [`mV`]
+        [____________]{$solution} mV
 
 END_PGML
 

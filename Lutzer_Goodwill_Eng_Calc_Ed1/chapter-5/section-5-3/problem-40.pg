@@ -52,11 +52,11 @@ END_PGML
 
 $column1 = PGML::Format(<<END_PGML); #The first column will contain everything up until the next END_PGML tag
     
-    Bit traffic: [________________]{42.5} Mb
+    Bit traffic: [________________]{2280} Mb
    
 END_PGML
 
-$column2 = image("/problem-39.jpg", width=>300, tex_size=>700); #The second column will contain the image corresponding to this problem.
+$column2 = image("/problem-39-40.png", width=>300, tex_size=>700); #The second column will contain the image corresponding to this problem.
 
 TEXT(ColumnTable($column1, $column2)); #Display the two columns in the desired order.
 
@@ -71,6 +71,10 @@ used in Simpson's rule.
 
 
 Where [`y_{0}`] is the point in which the line touches the y-axis, [`y_{1}`] is the y-value at [`x = 1`] and so forth.
+
+Keep in mind that [`\Delta x = \frac{b-a}{n}`] where [`b`] is the end of the interval being evaluated, [`a`] is the start 
+of the interval being evaluated, and [`n`] is the number of sections we need the area for ie the intervals
+[`[0,1]`], [`[1,2]`], [`[2,3]`] and so forth. Also note that the y-axis is in units of Mb / s while the x-axis is in units of minutes.
 
 END_PGML_HINT
 

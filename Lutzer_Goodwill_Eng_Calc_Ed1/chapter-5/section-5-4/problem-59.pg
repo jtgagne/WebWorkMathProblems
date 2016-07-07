@@ -12,7 +12,7 @@
 ## AuthorText1('Carl V. Lutzer')
 ## AuthorText2('H.T. Goodwill')
 ## Section1('5-4')
-## Problem1('49')
+## Problem1('59')
 ## Author('Carl V. Lutzer')
 ## Author('H.T. Goodwill')
 ## Institution('Wentworth Institute of Technology')
@@ -75,11 +75,11 @@ Section 5-4 Problem 59:
 
     Suppose a computer chip cools at a the following rate after the machine is turned off:
         
-        [`T'(t) = [$coolingRate]`]      [` F^{\circ} / seconds`]
+        [`T'(t) = [$coolingRate]`]  [`F^{\circ}`]/ seconds
 
     a). What is the net change in the chip's temperature during the first minute after the machine is turned off?
 
-        [____________]{$temperature} [`F^{\circ}`]  
+        [____________]{$temperature} [`{F^{\circ}}`]  
 
 END_PGML
 
@@ -91,7 +91,7 @@ BEGIN_PGML
 
     b). If the chip's operating system is [`85 F^{\circ}`] how long does it take to cool down to [`[$targetTemp] F^{\circ}`]?
 
-        [____________]{$timeToReachTargetTemp} [`seconds`]
+        [____________]{$timeToReachTargetTemp} seconds
 
 END_PGML
 

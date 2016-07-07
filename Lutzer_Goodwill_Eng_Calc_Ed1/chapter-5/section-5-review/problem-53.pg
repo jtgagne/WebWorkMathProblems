@@ -73,7 +73,7 @@ Section 5 Review Problem 53:
 
     Suppose the temperature of an object changes at the following rate: 
         
-        [`T'(t) = [$dT]`]      [` F^{\circ} / minute`]
+        [`T'(t) = [$dT]`]      [` F^{\circ}`] / minute
 
     If the object's temperature is [$targetTemp] after [$time] minutes, what was its initial temperature?
 

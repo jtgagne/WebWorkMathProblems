@@ -1,0 +1,67 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Calculus')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('5-3')
+## Problem1('39')
+## Author('Carl V. Lutzer')
+## Author('H.T. Goodwill')
+## Institution('Wentworth Institute of Technology')
+
+## KEYWORDS('definite' 'integral','Calculus', 'integrals', 'integration', 'definite integrals','integration', 'area', 'area under curve', 'estimate', 'understand')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+TEXT("(1 pt) ", $BBOLD, "Numerical Methods of Integration", $EBOLD, $BR, $BR);
+
+Context("Numeric");
+
+#Define a uppercase delta symbol
+$delta = "\(\displaystyle \Delta \)";
+
+
+BEGIN_TEXT
+      Use the trapezoid rule with $delta t = 1 to estimate the total bit traffic over the network in 10 minutes shown in the following figure.
+END_TEXT
+
+$column1 = PGML::Format(<<END_PGML); #The first column will contain everything up until the next END_PGML tag
+    
+    Bit traffic: [________________]{2340} Mb
+   
+END_PGML
+
+$column2 = image("/problem-39-40.png", width=>300, tex_size=>700); #The second column will contain the image corresponding to this problem.
+
+TEXT(ColumnTable($column1, $column2)); #Display the two columns in the desired order.
+
+BEGIN_HINT
+
+Since $delta t = 1, the bottom edge of each trapezoid to be used is 1. The first trapezoid should $BR 
+be formed on the interval [0,1]. The bases of each trapezoid can be formed by drawing a line $BR
+from the x-axis up to the line, on the endpoints of the interval and then by connecting the bases.
+Keep in mind, the unit of time is in minutes and the rate of change is Mb per second. Units must either be 
+casted to seconds or minutes to be consistent.   
+
+END_HINT
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
