@@ -1,4 +1,2 @@
 # WebWorkMathProblems
-Repo to store various math problems for the open source MAA WebWork Website.
-
-All problems are written for Wentworth Institiute of Technology  
+Repo to store various math problems to be used for WebWork homework assignments.
