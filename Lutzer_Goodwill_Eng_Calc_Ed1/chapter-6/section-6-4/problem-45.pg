@@ -1,0 +1,91 @@
+## DESCRIPTION
+## Homework problem for trigonometric substitution integration
+## ENDDESCRIPTION
+
+## Author('Justin Gagne')
+## DBcourse('Calculus - single variable')
+## DBchapter('Techniques of integration')
+## DBsection('Substitution (with trigonometric functions)')
+## KEYWORDS('Integrals', 'Antiderivatives', 'trigonometric', 'trig', 'functions')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('6-4')
+## Problem1('45')
+## Institution('Wentworth Institute of Technology')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+#Add any required plugins here. All plugins must be comma separated except for the last one. 
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl");
+
+loadMacros("PGML.pl", "unionTables.pl");
+
+#Add a new variable 't' to the context of the problem. Any letters can be added 
+Context()->variables->add(t => 'Real'); 
+Context()->variables->add(R => 'Real'); 
+
+
+#Allow for tolerance in the solution. This allows students to enter values within
+#the tolerance range
+Context()->flags->set(
+  tolerance => .001,
+  tolType => "absolute",
+);
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Trigonometric Substitution", $EBOLD, $BR, $BR);
+
+$showPartialCorrectAnswers = 0;
+
+
+$ans = Formula("0.553295*R");
+
+################################################################
+## PGML PROBLEM
+################################################################
+$column1 = PGML::Format(<<END_PGML);
+
+    Three friends make a pizza, and decide to cut it with parallel slicing rather than normal radial cuts. 
+    Where should they make their two cuts so each person gets an equal area of the pizza?
+
+    Use [`R`] to represent the radius of the pizza.
+
+END_PGML
+
+$column2 = image("/problem-45.png", width=>700, tex_size=>800);
+
+TEXT(ColumnTable($column1, $column2));
+
+BEGIN_PGML
+
+    [`x`] = [__________________________________]{$ans}
+
+END_PGML
+
+################################################################
+## PGML HINT
+################################################################
+BEGIN_PGML_HINT
+
+Newton's method will be handy in the end.
+  
+END_PGML_HINT
+
+
+################################################################
+## PGML SOLUTION
+################################################################
+BEGIN_PGML_SOLUTION
+
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();     # This should be the last executable line in the problem.

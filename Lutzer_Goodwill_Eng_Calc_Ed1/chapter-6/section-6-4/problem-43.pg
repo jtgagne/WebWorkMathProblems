@@ -1,0 +1,92 @@
+## DESCRIPTION
+## An example template for authoring WeBWork problems using Perl and PGML.
+## ENDDESCRIPTION
+
+## Author('Justin Gagne')
+## DBcourse('Calculus - single variable')
+## DBchapter('Techniques of integration')
+## DBsection('Substitution (with trigonometric functions)')
+## KEYWORDS('Integrals', 'Antiderivatives', 'trigonometric', 'trig', 'functions')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('6-4')
+## Problem1('43')
+## Institution('Wentworth Institute of Technology')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+#Add any required plugins here. All plugins must be comma separated except for the last one. 
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl");
+
+loadMacros("PGML.pl", "unionTables.pl");
+
+#Add a new variable 'w' and 'k' to the context of the problem. Any letters can be added 
+Context()->variables->add(w => 'Real'); 
+Context()->variables->add(k => 'Real'); 
+
+#Allow for tolerance in the solution. This allows students to enter values within
+#the tolerance range
+Context()->flags->set(
+  tolerance => .0009,
+  tolType => "absolute",
+);
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Trigonometric Substitution", $EBOLD, $BR, $BR);
+
+$showPartialCorrectAnswers = 0;
+
+$ans = Formula("k*(pi + sin(x-1) + (1/2)*(x-1)*sqrt(1-(x-1)^2))");
+
+################################################################
+## PGML PROBLEM
+################################################################
+$column1 = PGML::Format(<<END_PGML);
+
+    A circular pipe has a radius of 1 inch, but flow through the pipe is blocked by a valve. When the valve is open (either
+    fully or partially, as shown in Figure 4.8) the flow is proportional to the opened area. It is known that when the left-edge 
+    of the valve is at [`x`],  the flow is 
+
+        [`f(x) = 2k\displaystyle\int\limits^{x}_{0} \sqrt{1-(w-1)^{2}} \; dw`]
+
+    Perform the integration and write a formula for [`f(x)`].
+
+END_PGML
+
+$column2 = image("/problem-43.png", width=>700, tex_size=>800);
+
+TEXT(ColumnTable($column1, $column2));
+
+BEGIN_PGML
+
+    [`f(x)`] = [__________________________________]{$ans}
+
+END_PGML
+
+################################################################
+## PGML HINT
+################################################################
+BEGIN_PGML_HINT
+
+ _(begin with a substitution)_
+  
+END_PGML_HINT
+
+
+################################################################
+## PGML SOLUTION
+################################################################
+BEGIN_PGML_SOLUTION
+
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();     # This should be the last executable line in the problem.
