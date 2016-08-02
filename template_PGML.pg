@@ -1,0 +1,156 @@
+
+## DESCRIPTION
+## An example template for authoring WeBWork problems using Perl and PGML.
+## ENDDESCRIPTION
+
+## Author('Justin Gagne')
+## DBcourse('The course name in OPL or local server')
+## DBchapter('A chapter name of a course')
+## DBsection('A section name of a chapter')
+## KEYWORDS('Any', 'keyword', 'relevant', 'to', 'the', 'problem')
+## TitleText1('The title of the textbook')
+## EditionText1('1')
+## Section1('5-2')
+## Problem1('43')
+## AuthorText1('Contributing author of TitleText1')
+## AuthorText1('Contributing author of TitleText1')
+## Institution('Wentworth Institute of Technology')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+#Add any required plugins here. All plugins must be comma separated except for the last one. 
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl");
+
+loadMacros("PGML.pl");
+
+#Add a new variable 't' to the context of the problem. Any letters can be added 
+#to the context and used as variables. In this case, the Context tells the PG 
+#compiler to recognize 't' as a variable. The variable 't' represents an arbitrary 
+#'Real' number.
+Context()->variables->add(t => 'Real'); 
+
+#Variables can be removed from the Context
+Context()->variables->remove("t");
+
+#Multiple variables can also be added at the same time if separated by commas. 
+Context()->variables->add(t=>'Real', y=> 'Real');
+
+#'pi' is a default constant in Context. Remove 'pi' and give it a new value:
+Context()->constants->remove("pi");
+
+#Add a new constant 'pi' to the context of the problem
+Context()->constants->add(pi=>3.14159);
+
+#Allow for tolerance in the solution. This allows students to enter values within
+#the tolerance range
+Context()->flags->set(
+  tolerance => .0009,
+  tolType => "absolute",
+);
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Introduction to Formulas", $EBOLD, $BR, $BR);
+
+
+$showPartialCorrectAnswers = 0;
+
+#Scalar Data Types
+$real = 4.30;                   #Scalar variable with data stored as a double
+$integer = 1;                   #Scalar variable with data stored as an integer
+$string = "Some string data";   #Scalar variable with data stored as a string
+
+#Arrays
+@numberArray = (1,2,3.5);                 #Array of numerical values
+@stringArray = ("String1", "String2");    #Array of string values
+@mixedArray = ("string", 1, 2.3);         #Array of mixed data
+
+#Hashes
+%wordToNum = ('One', 1, 'Two', 2);   #Hash to map 1-->'One' and 2-->'Two'
+
+#Getting data from arrays
+$num1 = $numberArray[0];
+$num2 = $numberArray[1];
+$num3 = $numberArray[2];
+
+#Getting data from hashes
+$one = $wordToNum{-One};  #Get the value for the key 'One'
+$two = $wordToNum{-Two};  #Get the value for the key 'Two'
+
+#Instantiate a formula object using the formula containing in the quotations
+$f = Formula("3x^2+4x+5");   #f(x) = 3x^2 + 4x + 5
+$g = Formula("4t^3-10");    #g(t) = 4t^3 - 10
+
+#Find the initial condition of both of the formulas f and g. 
+$f_initial = $f->substitute(x,0);   #f(0) = 3(0)^2 + 4(0) + 5 = 5
+$g_initial = $g->substitute(t,0);   #g(0) = 4(0)^3 - 10 = -10
+
+#Compute the solution to formula with substituted values--> Not Necessary since substitute simplifies the equation too
+#$ans_f_initial = Compute($f_initial); #f(0) = 5
+#$ans_g_initial = Compute($g_initial); #g(0) = -10
+
+#Compute the solution for the initial condition using a hardcoded equation
+$x = 0;                                 #Initial condition of x
+$t = 0;                                 #Initial condition of t
+$f_initial_2 = 3*(($x)**2) + 4*$x + 5;  #f(0) = 3(0)^2 + 4(0) + 5 = 5
+$g_initial_2 = 4*(($t)**3) - 10;        #g(0) = 4(0)^3 - 10 = -10
+
+#Marks the beginning of a section of text/code that is to be displayed to the user when rendered. 
+BEGIN_PGML
+
+  Given:
+  
+    [`f(x) = [$f]`]     [%Show the formula for $f%]  
+    [`g(t) = [$g]`]     [%Show the formula for $g%]  
+
+  Find the initial conditions of [`f(x)`] and [`g(t)`]. 
+
+  [`f(0) = `] [____________]{$f_initial}
+
+  [`g(0) = `] [____________]{$g_initial} 
+
+END_PGML
+#Marks the end of a section of text/code that is to be displayed to the user when rendered. 
+
+#Mark the start of a renderable PGML hint block. 
+BEGIN_PGML_HINT
+  
+  An initial condition of an equation can be found by evaluating an equation at 0.
+
+  For each [`x`] in [`f(x) = [$f]`], substitute [`x = 0`]. [%Show the formula in LaTeX%]
+
+  For each [`t`] in [`g(t) = [$g]`], substitute [`t = 0`]. [%Show the formula in LaTeX%]
+  
+END_PGML_HINT
+#Mark the end of a renderable PGML hint block.
+
+#Redefine these, just found out substitute also solves the problem.
+$x = 0;
+$t = 0;
+$f_initial = "3($x)^2+4($x)+5";
+$g_initial = "4($t)^3-10";
+
+#Mark the start of a renderable PGML solution block.
+BEGIN_PGML_SOLUTION
+Solve for the initial conditions of the given equations:  
+
+  1). [`f(x) = [$f]`]                [%Show the initial formula in LaTeX%]
+
+      [`f(0) = [$f_initial]`]        [%Show the formula with substitutions in LaTeX%]
+
+      [`f(0) = [$ans_f_initial]`]    [%Show the answer in LaTeX%]
+
+  2). [`g(t) = [$g]`]                [%Show the initial formula in LaTeX%]
+
+      [`g(0) = [$g_initial]`]        [%Show the formula with substitutions in LaTeX%]
+
+      [`g(0) = [$ans_g_initial]`]    [%Show the answer in LaTeX%]
+
+END_PGML_SOLUTION
+#Mark the end of a renderable PGML solution block.
+
+ENDDOCUMENT();     # This should be the last executable line in the problem.
