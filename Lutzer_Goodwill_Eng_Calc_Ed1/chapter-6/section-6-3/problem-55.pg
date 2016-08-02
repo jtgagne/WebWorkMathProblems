@@ -1,0 +1,81 @@
+## DESCRIPTION
+## An example template for authoring WeBWork problems using Perl and PGML.
+## ENDDESCRIPTION
+
+## Author('Justin Gagne')
+## DBcourse('Calculus - single variable')
+## DBchapter('Integrals')
+## DBsection('Antiderivatives (with trigonometric functions)')
+## KEYWORDS('Integrals', 'Antiderivatives', 'trigonometric', 'trig', 'functions')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('6-3')
+## Problem1('55')
+## Institution('Wentworth Institute of Technology')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+#Add any required plugins here. All plugins must be comma separated except for the last one. 
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl");
+
+loadMacros("PGML.pl");
+
+#Add a new variable 't' to the context of the problem. Any letters can be added 
+Context()->variables->add(t => 'Real'); 
+
+#Allow for tolerance in the solution. This allows students to enter values within
+#the tolerance range
+Context()->flags->set(
+  tolerance => .0009,
+  tolType => "absolute",
+);
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Overview of Trigonometric Functions", $EBOLD, $BR, $BR);
+
+$showPartialCorrectAnswers = 0;
+
+$ans = Formula("sqrt(2)");
+
+################################################################
+## PGML PROBLEM
+################################################################
+BEGIN_PGML
+    In signal analysis we use functions of the form [`A_{k}cos(k \pi t)`] where [`k`] is a positive integer.
+    Determine a value of [`A_{k}`] so that  
+
+        [`\int^{1}_{0} A^{2}_{k} cos^{2}(k \pi t) dt = 1 `],
+
+    and verify that the value does not depend on [`k`].
+
+    [`A_k = `] [______________]{$ans}
+    
+END_PGML 
+
+
+################################################################
+## PGML HINT
+################################################################
+BEGIN_PGML_HINT
+  
+  
+END_PGML_HINT
+
+
+################################################################
+## PGML SOLUTION
+################################################################
+BEGIN_PGML_SOLUTION
+
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();     # This should be the last executable line in the problem.
