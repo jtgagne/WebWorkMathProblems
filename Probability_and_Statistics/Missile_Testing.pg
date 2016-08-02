@@ -1,0 +1,63 @@
+## DESCRIPTION
+## Probability and Statistics: Geometric Distributions
+## ENDDESCRIPTION
+
+## Editor('Justin Gagne')
+## DBsubject('Probability')
+## DBchapter('')
+## DBsection('Problem')
+## KEYWORDS('Probability, Statistics, Geometric, Distribution ')
+## EditionText1('1')
+## AuthorText1('')
+## AuthorText2('')
+## Section1('')
+## Problem1('')
+## Author('')
+## Author('')
+## Department('Department of Applied Mathematics')
+## Institution('Wentworth Institute of Technology')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+#Add any required plugins here. All plugins must be comma separated except for the last one. 
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl"
+);
+
+loadMacros("PGML.pl","unionTables.pl");
+
+#Add a new variable 't' to the context of the problem. Any letters can be added to the context and used as variables.
+#In this case, we are telling the PG compiler to recognize 't' as a variable the variable 't' represents some real number.
+Context()->variables->add(t=>'Real'); 
+
+#Allow for tolerance in the solution. This allows students to enter values with in the 
+Context()->flags->set(
+  tolerance => .0009,
+  tolType => "absolute",
+);
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Probability Distributions", $EBOLD, $BR, $BR);
+$showPartialCorrectAnswers = 0;
+
+$S = random(85, 97) / 100;              #Create a random probability of success between .85 and .97
+$F = 1 - $S;                            #Calculate the probability of failure
+$missiles = 5;                          #There are 5 missiles to be tested
+$ans = Compute(((1-$F)**($missiles - 1)) * $F);     #Calculate for failure on the fifth try
+
+#Write out the textual description exactly as you want it to be displayed between the BEGIN_PGML and END_PGML tags.
+BEGIN_PGML
+  
+    Cruise missiles built by an aerospace company are to be tested. The probability of a successful firing on any one test is [`p(S) = [$S]`].
+    Assuming independent firings, what is the probability that the first failure occurs on the fifth firing? (Round to 4 decimal places).
+
+        p(First Failure Occurring on Fifth Missile) = [___________]{$ans}
+
+END_PGML
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
