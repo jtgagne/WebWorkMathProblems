@@ -1,0 +1,96 @@
+## DESCRIPTION
+## Homework problem for trigonometric substitution integration
+## ENDDESCRIPTION
+
+## Author('Justin Gagne')
+## DBcourse('Calculus - single variable')
+## DBchapter('Techniques of integration')
+## DBsection('Substitution (with trigonometric functions)')
+## KEYWORDS('Integrals', 'Antiderivatives', 'trigonometric', 'trig', 'functions')
+## TitleText1('Engineering Calculus Single Variable')
+## EditionText1('1')
+## AuthorText1('Carl V. Lutzer')
+## AuthorText2('H.T. Goodwill')
+## Section1('6-4')
+## Problem1('45')
+## Institution('Wentworth Institute of Technology')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+#Add any required plugins here. All plugins must be comma separated except for the last one. 
+loadMacros(
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl");
+
+loadMacros("PGML.pl", "unionTables.pl");
+
+#Allow for tolerance in the solution. This allows students to enter values within
+#the tolerance range
+Context()->flags->set(
+  tolerance => .0009,
+  tolType => "absolute",
+);
+
+Context()->variables->add(H => 'Real'); 
+
+#Display a title for the problem
+TEXT( "(1 pt) " , $BBOLD, "Trigonometric Substitutions", $EBOLD, $BR, $BR);
+
+$showPartialCorrectAnswers = 0;
+
+
+$ans = Formula("2*arcsin( (1/2)*sqrt(4-H^2) + (1/4)*H*(H-2)*sqrt(4-H^2))");
+
+################################################################
+## PGML PROBLEM
+################################################################
+$column1 = PGML::Format(<<END_PGML);
+
+    In mobile ad-hoc wireless networks (MANETS), a data-traffic pattern called _converge cast_
+    requires that all data be sent to a special node called the _cluster head_. Because the
+    communicating nodes are moving and their radio transmitters have a finite range, there are 
+    times when a member of the network cannot transmit directly to the cluster head, and must 
+    use other nodes to relay data. Figure 4.11 shows the cluster head and a node that is out 
+    of transmission range (which we'll call 1 unit). The probability that another node is in 
+    position to act as a relay is directly proportional to the shaded area of the overlap in the
+    communication disks shown. Determine a formula for the area of the shaded region as a function 
+    of [`r`].
+
+    Consider the center of the first circle to be located at (0,0) and the center of the second circle to be located at (H, 0).
+
+END_PGML 
+
+$column2 = image("/problem-47.png", width=>1500, tex_size=>800);
+
+TEXT(ColumnTable($column1, $column2));
+
+BEGIN_PGML
+
+    [`r(H) = `] [____________________]{$ans}
+
+END_PGML
+
+################################################################
+## PGML HINT
+################################################################
+BEGIN_PGML_HINT
+  
+  Use _arcsin_ to represent [`sin^{-1}`]  
+  Or  _arccos_ to represent [`cos^{-1}`]  
+
+END_PGML_HINT
+
+
+################################################################
+## PGML SOLUTION
+################################################################
+BEGIN_PGML_SOLUTION
+
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();     # This should be the last executable line in the problem.
