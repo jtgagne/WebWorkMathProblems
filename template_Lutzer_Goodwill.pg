@@ -25,7 +25,7 @@ loadMacros(
 "PGanswermacros.pl",
 "PGauxiliaryFunctions.pl");
 
-loadMacros("PGML.pl");
+loadMacros("PGML.pl", "unionTables.pl");
 
 #Add a new variable 't' to the context of the problem. Any letters can be added 
 Context()->variables->add(t => 'Real'); 

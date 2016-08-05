@@ -27,6 +27,8 @@ loadMacros(
 
 loadMacros("PGML.pl", "unionTables.pl");
 
+Context("Interval");
+
 #Add a new variable 't' to the context of the problem. Any letters can be added 
 Context()->variables->add(t => 'Real'); 
 Context()->variables->add(R => 'Real'); 
@@ -45,7 +47,7 @@ TEXT( "(1 pt) " , $BBOLD, "Trigonometric Substitution", $EBOLD, $BR, $BR);
 $showPartialCorrectAnswers = 0;
 
 
-$ans = Formula("0.553295*R");
+$ans = Set(0.553295*R, -0.553295*R);
 
 ################################################################
 ## PGML PROBLEM
@@ -65,9 +67,10 @@ TEXT(ColumnTable($column1, $column2));
 
 BEGIN_PGML
 
-    [`x`] = [__________________________________]{$ans}
+    [`x`] = [__________________________________]{cmp->isSubsetOf($ans)}
 
 END_PGML
+
 
 ################################################################
 ## PGML HINT
