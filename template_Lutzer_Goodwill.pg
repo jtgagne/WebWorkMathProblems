@@ -37,6 +37,11 @@ Context()->flags->set(
   tolType => "absolute",
 );
 
+$S = random(85, 97) / 100;              #Create a random probability of success between .85 and .97
+$F = 1 - $S;                            #Calculate the probability of failure
+$missiles = 5;                          #There are 5 missiles to be tested
+$ans = Compute(((1-$F)**($missiles - 1)) * $F);     #Calculate for failure on the fifth try
+
 #Display a title for the problem
 TEXT( "(1 pt) " , $BBOLD, "Overview of Trigonometric Functions", $EBOLD, $BR, $BR);
 
