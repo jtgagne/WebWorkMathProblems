@@ -1,0 +1,129 @@
+DOCUMENT();  
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"PGcourse.pl", 
+"MathObjects.pl",
+"parserPopUp.pl",
+"parserAssignment.pl",
+"PGunion.pl"
+);
+
+#Include support for PGML syntax
+loadMacros("PGML.pl", "unionTables.pl");
+
+##########################################
+##TODO: Get the PGML macro updated from webwork to allow for more usage of LaTeX in PGML renderings
+
+TEXT( "(1 pt) " , $BBOLD, "Ordinary Differential Equations", $EBOLD, $BR, $BR);
+
+Context("Numeric");
+Context()->variables->add(t=>"Real");
+Context()->variables->add(d=>"Real");
+Context()->variables->add(dt=>"Real");
+Context()->variables->add(dx=>"Real");
+
+#Coefficient of x
+$xCoe = random(1, 50);
+$tCoe = random(1, 10);
+$coe1 = random(1,20);
+$coe2 = random(1,20);
+$coe3 = random(1,20);
+
+$formula = "$coe1 \frac{d^{2}x}{dt} + $coe2 \frac{dx}{dt} + $xCoe x = $coe3 cos($tCoe t)";
+
+$popup1 = PopUp(['choose one','ordinary', 'partial'], 'ordinary');
+$popup2 = PopUp(['choose one','first', 'second', 'third', 'fourth', 'fifth'], 'second');
+$popup3 = PopUp(['choose one','linear', 'nonlinear', 'not ODE'], 'linear');
+
+$mc = new_checkbox_multiple_choice();
+$mc -> qa (
+"Select all independent variables to this differential equation.  There may be more than one correct answer.", #correct answers#
+"t",               
+);
+$mc -> extra(
+"x",
+);
+$mc -> makeLast("None of the above");
+
+$mc2 = new_checkbox_multiple_choice();
+$mc2 -> qa (
+"Select all dependent variables to this differential equation.  There may be more than one correct answer.", #correct answers#
+"x",               
+);
+$mc2 -> extra(
+"t",
+);
+$mc2 -> makeLast("None of the above");
+
+##########################################
+
+
+BEGIN_PGML
+
+Consider the following differential equation:
+
+[`[$formula]`]
+
+
+[@ $HR @]*
+
+Ordinary differential equation (ODE) or a partial differential equation (PDE)?
+[@ $popup1->menu() @]*
+
+*Note:*  _You only have two attempts at this problem._
+
+[@ $HR @]*
+
+State the order. [@ $popup2->menu() @]*
+
+[@ $HR @]*
+
+[@ $mc -> print_q() @]*
+
+[@ $mc -> print_a() @]*
+
+[@ $HR @]*
+
+[@ $mc2 -> print_q() @]*
+
+[@ $mc2 -> print_a() @]*
+
+[@ $HR @]*
+
+If the equation is an ODE, is it linear or nonlinear?
+[@ $popup3->menu() @]*
+
+*Note:* _You only have two attempts at this problem._
+
+END_PGML
+
+##########################################
+
+install_problem_grader(~~&std_problem_grader);
+
+$showPartialCorrectAnswers = 0;
+
+ANS($popup1->cmp());
+ANS($popup2->cmp());
+ANS( checkbox_cmp( $mc->correct_ans() ) );
+ANS( checkbox_cmp( $mc2->correct_ans() ) );
+ANS($popup3->cmp());
+
+
+BEGIN_PGML_SOLUTION
+[@$PAR@]* SOLUTION [@$PAR@]*
+
+[`[$formula]`]
+
+This is an ordinary, linear, second order differential equation. Its independent variable is [`t`] and its dependent variable is [`x`].
+
+It is linear because all the [`x`] (dependent variable) terms [`\frac{d^2}{dt^2}x, \frac{d}{dt}x`] and [`x`] are to the degree (power) 1 
+and the coefficients of the [`t`] (dependent variable) term are [`[$tCoe]`]. The function to the right of the equal sign 
+(the forcing function), [`[$coe3]cos([$tCoe]t)`], are either constants or functions of the independent variable, [`t`].
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();
