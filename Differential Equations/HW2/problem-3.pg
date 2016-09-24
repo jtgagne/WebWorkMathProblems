@@ -1,0 +1,63 @@
+## DBsubject(Differential equations)
+
+## Author(Mel Henriksen)
+## Institution('Wentworth Institute of Technology')
+## Section1('1-3')
+## Problem1('6')
+
+## DESCRIPTION
+## Problem 6 from section 1-3 Nagle Differential Equations textbook
+## ENDDESCRIPTION 
+DOCUMENT() ;        # This should be the first executable line
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl"
+) ;
+
+
+TEXT( "(1 pt) " , $BBOLD, "Section 1-3 Direction Fields", $EBOLD, $BR, $BR);
+
+$showPartialCorrectAnswers = 1 ;
+
+
+BEGIN_TEXT
+
+Consider the differential equation:
+\[\frac{dy}{dx}=x+\sin(y)\]$BR
+(a) A solution curve passes through the point \((1,\pi/2)\)$BR
+What is its slope at this point?
+Slope \(= \)  \{ans_rule(10) \}$BR $BR 
+
+(b) Draw the direction field (using any of the tools we discussed in class) and draw a solution through \((0,0)\). Estimate the point of the relative minima on the \(x\) interval \([-1, 1]\). Confirm your estimate using the first and second derivative tests. 
+
+A relative minima exists at the point  \{ans_rule(3) \}, \{ans_rule(3) \}$BR $BR 
+END_TEXT
+                 
+
+$ansa =  "2" ;
+$ansb1 =  "0" ;
+$ansb2 =  "0" ;
+
+ANS(fun_cmp($ansa, limits=>[0,10])) ;
+ANS(fun_cmp($ansb1)) ;
+ANS(fun_cmp($ansb2)) ;
+
+SOLUTION(EV3(<<'END_SOLUTION'));
+$PAR SOLUTION $PAR
+(a) The slope at \((1,\pi/2)\) equals \(\frac{dy}{dx}=1+\sin(\frac{\pi}{2})=2\)
+$BR
+(b) From the direction field we see that a minima exists at or near \((0,0)\).$BR
+\{ image( "problem-3.png", width=>300, height=>300,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+The criteria for a relative minima are \(\frac{dy}{dx}=0\) and \(\frac{d^2y}{dx^2}> 0\)$BR
+\[\frac{dy}{dx}=x+\sin(y)=0 \text{ at } (0,0)\]$BR
+\[\frac{d^2y}{dx^2}=1+\cos(y)\frac{dy}{dx}=1+\cos(y)(x+\sin(y))\]$BR
+\[\frac{d^2y}{dx^2}=1+\cos(0)(0+\sin(0))=1>0 \text{ at } (0,0)\]$BR
+Thus a critical point exists at \((0,0)\) and that point is a minima. 
+END_SOLUTION
+
+ENDDOCUMENT();    

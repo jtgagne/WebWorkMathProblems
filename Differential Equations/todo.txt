@@ -13,6 +13,9 @@ Problems 4,5,6,7,9,10,11,12
     -Update the solution 
 
 
+HW2
+1. Problem 1, cite the textbook properly 
+
 ## Author('Justin Gagne')
 ## KEYWORDS('differential', 'equations')
 ## Institution('Wentworth Institute of Technology')
@@ -33,4 +36,4 @@ loadMacros("PGML.pl", "unionTables.pl");
 
 ##########################################
 
-TEXT( "(1 pt) " , $BBOLD, "Classifying Differential Equations", $EBOLD, $BR, $BR);
+TEXT( "(1 pt) " , $BBOLD, "Direction Fields", $EBOLD, $BR, $BR);

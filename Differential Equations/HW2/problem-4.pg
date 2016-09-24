@@ -1,0 +1,135 @@
+## DBsubject(Differential equations)
+
+## Author(Mel Henriksen)
+## Institution('Wentworth Institute of Technology')
+## Section1('1-3')
+## Problem1('10')
+
+## DESCRIPTION
+## Problem 10 from section 1-3 Nagle Differential Equations textbook
+## ENDDESCRIPTION 
+DOCUMENT() ;        # This should be the first executable line
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl"
+) ;
+
+
+TEXT( "(1 pt) " , $BBOLD, "Section 1-3 Direction Fields", $EBOLD, $BR, $BR);
+
+$showPartialCorrectAnswers = 1 ;
+
+$mc = new_checkbox_multiple_choice();
+$mc -> qa (
+"The slope of each of the solutions at \(x=0\) is:", 
+"\( \le 0\)",               
+);
+$mc -> extra(
+"\(\ge 0 \)",
+);
+$mc -> extra(
+"\(=0 \)",
+);
+$mc -> makeLast("None of the above");
+
+BEGIN_TEXT
+For any of the answers below requiring \(\pi\) enter pi.$BR$BR
+
+(a) Draw the direction field for the following differential equation and draw several solution curves.$BR
+
+\[\frac{dy}{dx}=\sin(x)\]$BR
+
+What is its slope of each of these solution curves at \(x=0\) ?
+Slope \(= \)  \{ans_rule(10) \}$BR $BR 
+(b) Draw the direction field for the following differential equation and draw several solution curves.$BR
+
+\[\frac{dy}{dx}=\sin(y)\]$BR
+
+What is its slope of the solution through \((0,0)\) at the point \((0,0)\)?
+Slope \(= \)  \{ans_rule(10) \}$BR $BR 
+
+(c) Draw the direction field for the following differential equation and draw several solution curves.$BR
+
+\[\frac{dy}{dx}=\sin(x)\sin(y)\]$BR
+
+At what value x on the interval \([2,4]\) is the slope of each of the solution curves equal to 0? 
+\(x=\)  \{ans_rule(10) \}$BR $BR 
+
+(d) Draw the direction field for the following differential equation and draw several solution curves.$BR
+
+\[\frac{dy}{dx}=x^2+2y^2\]$BR
+
+A solution curve through what point on the \(x\) interval \([-2,2]\) has a slope equal to 0? 
+\( (x,y)=\) \( ( \)\{ans_rule(3) \}, \{ans_rule(3) \} \( ) \)
+
+$BR $BR 
+
+(e) Draw the direction field for the following differential equation and draw several solution curves.$BR
+
+\[\frac{dy}{dx}=x^2-2y^2\]$BR
+
+\{ $mc -> print_q() \}
+$BR
+\{ $mc -> print_a() \}
+
+$BR
+
+END_TEXT
+                 
+
+$ansa =  "0" ;
+$ansb =  "0" ;
+$ansc =  "pi" ;
+$ansd1 =  "0" ;
+$ansd2 =  "0" ;
+
+ANS(fun_cmp($ansa)) ;
+ANS(fun_cmp($ansb)) ;
+ANS(fun_cmp($ansc)) ;
+ANS(fun_cmp($ansd1)) ;
+ANS(fun_cmp($ansd2)) ;
+ANS( checkbox_cmp( $mc->correct_ans() ) );
+
+SOLUTION(EV3(<<'END_SOLUTION'));
+$PAR SOLUTION $PAR
+(a) The direction field for the following differential equation is: $BR
+\[\frac{dy}{dx}=\sin(x)\]
+$BR
+
+\{ image( "problem-4a.png", width=>300, height=>300,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+It can be seen that the slope of all solutions at \(x=0\) is \(0\).$BR$BR
+
+(b) The direction field for the following differential equation is: $BR
+\[\frac{dy}{dx}=\sin(y)\]$BR
+\{ image( "problem-4b.png", width=>300, height=>300,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+It can be seen that the slope of the solution curve through \((0,0)\) at the point \((0,0)\) is \(0\).$BR$BR
+
+(c) The direction field for the following differential equation is: $BR
+\[\frac{dy}{dx}=\sin(x)\sin(y)\]$BR
+\{ image( "problem-4c.png", width=>300, height=>300,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+It can be seen from the direction field plot that the slope of all solutions at or near \(x=\pi\) is \(0\). That the zero slope is in fact at \(\pi\) can be confirmed by seeing that \(\sin(x)=0\) at \(x=\pi \)$BR$BR
+
+(d) The direction field for the following differential equation is: $BR
+\[\frac{dy}{dx}=x^2+2y^2\]$BR
+\{ image( "problem-4d.png", width=>300, height=>300,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+It can be seen that the slope of the solution at \((0,0)\) is \(0\).$BR$BR
+
+(e) The direction field for the following differential equation is: $BR
+\[\frac{dy}{dx}=x^2-2y^2\]$BR
+\{ image( "problem-4e.png", width=>300, height=>300,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+It can be seen that the slope of all solutions at \(x=0\) is \(\le 0\).$BR$BR
+
+
+
+END_SOLUTION
+
+ENDDOCUMENT();    
