@@ -1,0 +1,128 @@
+## Author('Justin Gagne')
+## KEYWORDS('differential', 'equations')
+## Institution('Wentworth Institute of Technology')
+DOCUMENT();  
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"PGcourse.pl", 
+"MathObjects.pl",
+"parserPopUp.pl",
+"parserAssignment.pl",
+"PGunion.pl",
+);
+
+#Include support for PGML syntax
+loadMacros("PGML.pl", "unionTables.pl");
+
+##########################################
+
+TEXT( "(1 pt) " , $BBOLD, "Classifying Differential Equations", $EBOLD, $BR, $BR);
+
+Context("Numeric");
+
+$c1 = random(1,20);
+$c2 = random(1,10);
+
+$formula = "$c1 \frac{d^{4}y}{dx^{4}} = x($c2 - x)";
+
+$popup1 = PopUp(['choose one','ordinary', 'partial'], 'ordinary');
+$popup2 = PopUp(['choose one','first', 'second', 'third', 'fourth', 'fifth'], 'fourth');
+$popup3 = PopUp(['choose one','linear', 'nonlinear', 'not ODE'], 'linear');
+
+$mc = new_checkbox_multiple_choice();
+$mc -> qa (
+"Select all independent variables to this differential equation.  There may be more than one correct answer.", 
+"\(x\)",               
+);
+$mc -> extra(
+"\(y\)",
+);
+$mc -> makeLast("None of the above");
+
+$mc2 = new_checkbox_multiple_choice();
+$mc2 -> qa (
+"Select all dependent variables to this differential equation.  There may be more than one correct answer.", #correct answers#
+"\(y\)",               
+);
+$mc2 -> extra(
+"\(x\)",
+);
+$mc2 -> makeLast("None of the above");
+
+##########################################
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the following differential equation: $PAR
+\(\displaystyle $formula\)
+$BR
+$BR
+$HR
+$BR
+Ordinary differential equation (ODE) or a partial differential equation (PDE)?
+\{$popup1->menu\}
+$PAR
+$BBOLD Note:$EBOLD  $BITALIC You only have two attempts at this problem.$EITALIC
+
+$BR
+$HR
+$BR
+
+State the order. \{$popup2->menu\} $BR
+
+$BR
+$HR
+$BR
+
+\{ $mc -> print_q() \}
+$BR
+\{ $mc -> print_a() \}
+
+$BR
+$HR
+$BR
+
+
+\{ $mc2 -> print_q() \}
+$BR
+\{ $mc2 -> print_a() \}
+
+$BR
+$HR
+$BR
+
+If the equation is an ODE, is it linear or nonlinear?
+\{$popup3->menu\}
+$PAR
+$BBOLD Note:$EBOLD  $BITALIC You only have two attempts at this problem.$EITALIC
+END_TEXT
+
+##########################################
+
+install_problem_grader(~~&std_problem_grader);
+
+$showPartialCorrectAnswers = 0;
+
+ANS($popup1->cmp());
+ANS($popup2->cmp());
+ANS( checkbox_cmp( $mc->correct_ans() ) );
+ANS( checkbox_cmp( $mc2->correct_ans() ) );
+ANS($popup3->cmp());
+
+SOLUTION(EV3(<<'END_SOLUTION'));
+$PAR SOLUTION $PAR
+
+\[\displaystyle $formula\]
+
+This is an ordinary, linear, fourth order differential equation. Its independent variable is x and its dependent variable is y.
+
+It can be easily seen to be linear by writing the equation in standard form: 
+
+\[ \frac{d^{4}y}{dx^{4}} = \frac{x(1 - x)}{8}\]
+
+The dependent variable (or in this case its fourth derivative) is to the first power and the forcing function is a function only of the independent variable \(x\).
+END_SOLUTION
+
+ENDDOCUMENT();

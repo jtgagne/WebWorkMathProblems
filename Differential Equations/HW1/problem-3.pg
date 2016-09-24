@@ -1,0 +1,113 @@
+## Author('Justin Gagne')
+## KEYWORDS('differential', 'equations')
+## Institution('Wentworth Institute of Technology')
+
+DOCUMENT();  
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"PGcourse.pl", 
+"MathObjects.pl",
+"parserPopUp.pl",
+"parserAssignment.pl",
+"PGunion.pl",
+);
+
+#Include support for PGML syntax
+loadMacros("PGML.pl", "unionTables.pl");
+
+##########################################
+
+TEXT( "(1 pt) " , $BBOLD, "Classifying Differential Equations", $EBOLD, $BR, $BR);
+
+Context("Numeric");
+
+$formula = '
+\frac{\partial^{2}u}{\partial{x^{2}}} + \frac{\partial^{2}u}{\partial{y^{2}}} = 0';
+
+$popup1 = PopUp(['choose one','ordinary', 'partial'], 'partial');
+$popup2 = PopUp(['choose one','first', 'second', 'third', 'fourth', 'fifth'], 'second');
+$popup3 = PopUp(['choose one','linear', 'nonlinear', 'not ODE'], 'not ODE');
+
+$mc = new_checkbox_multiple_choice();
+$mc -> qa (
+"Select all independent variables to this differential equation.  There may be more than one correct answer.", #correct answers#
+"x", "y",               
+);
+$mc -> extra(
+"u",
+);
+$mc -> makeLast("None of the above");
+
+$mc2 = new_checkbox_multiple_choice();
+$mc2 -> qa (
+"Select all dependent variables to this differential equation.  There may be more than one correct answer.", #correct answers#
+"u",               
+);
+$mc2 -> extra(
+"x", "y",
+);
+$mc2 -> makeLast("None of the above");
+
+##########################################
+
+Context()->texStrings;
+BEGIN_PGML
+
+Consider the following differential equation:
+
+[`[$formula]`]
+
+[@ $HR @]*
+
+Ordinary differential equation (ODE) or a partial differential equation (PDE)?
+[@ $popup1->menu() @]*
+
+*Note:* _You only have two attempts at this problem._
+
+[@ $HR @]*
+
+State the order. [@ $popup2->menu() @]*
+
+[@ $HR @]*
+
+[@ $mc -> print_q() @]*
+
+[@ $mc -> print_a() @]*
+
+[@ $HR @]*
+
+[@ $mc2 -> print_q() @]*
+
+[@ $mc2 -> print_a() @]*
+
+[@ $HR @]*
+
+If the equation is an ODE, is it linear or nonlinear?
+[@ $popup3->menu() @]*
+
+*Note:* _You only have two attempts at this problem._
+
+END_PGML
+
+##########################################
+
+install_problem_grader(~~&std_problem_grader);
+
+$showPartialCorrectAnswers = 0;
+
+ANS($popup1->cmp());
+ANS($popup2->cmp());
+ANS( checkbox_cmp( $mc->correct_ans() ) );
+ANS( checkbox_cmp( $mc2->correct_ans() ) );
+ANS($popup3->cmp());
+
+SOLUTION(EV3(<<'END_SOLUTION'));
+$PAR SOLUTION $PAR
+
+\[\mbox{This is a partial, second order differential equation. Its independent variables are x and y, and its dependent variable is u.}\]
+
+END_SOLUTION
+
+ENDDOCUMENT();

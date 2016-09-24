@@ -1,0 +1,36 @@
+Notes on problem updates:
+
+HW1
+1. Alert WIT to update the macros, once macros are updated, convert all to PGML simplified file syntax 
+    -problem-1
+        --> Requires an update by WIT for PGML macro for proper rendering
+    -problem-2
+        --> Requires an update by WIT for PGML macro for proper rendering
+    -problem-3
+        --> Needs a custom answer checker to be randomized properly
+
+Problems 4,5,6,7,9,10,11,12
+    -Update the solution 
+
+
+## Author('Justin Gagne')
+## KEYWORDS('differential', 'equations')
+## Institution('Wentworth Institute of Technology')
+DOCUMENT();  
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"PGcourse.pl", 
+"MathObjects.pl",
+"parserPopUp.pl",
+"parserAssignment.pl",
+"PGunion.pl",
+);
+
+#Include support for PGML syntax
+loadMacros("PGML.pl", "unionTables.pl");
+
+##########################################
+
+TEXT( "(1 pt) " , $BBOLD, "Classifying Differential Equations", $EBOLD, $BR, $BR);
