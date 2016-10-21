@@ -19,7 +19,7 @@ loadMacros(
 ) ;
 
 
-TEXT( "(1 pt) " , $BBOLD, "Direction Fields", $EBOLD, $BR, $BR);
+TEXT( "(1 pt) " , $BBOLD, "Section 1-3 Direction Fields", $EBOLD, $BR, $BR);
 
 $showPartialCorrectAnswers = 1 ;
 

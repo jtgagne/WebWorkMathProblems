@@ -1,0 +1,96 @@
+## Nagle
+## Section 1.4
+## Problem 15
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$ans1 = Compute("80.46");
+$ans2 = Compute("73.65");
+
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Newton’s law of cooling states that the rate of change in the temperature \(T\) of a body is proportional to the difference between the temperature of the medium \(M\) and the
+temperature of the body. That is, 
+\[ \frac{dT}{dt} =k(M(t)-T(t))  \]$BR
+where \(k\) is a constant. 
+$BR$BR
+
+Let \(k=1\) /min and the temperature of the medium be constant, \(M(t)= 70^{\circ}\). If the body is initially at \(100^{\circ}\), use a spreadsheet and Euler’s method with \(h=0.1\) minute to approximate the temperature of the body after:$BR
+(a) 1 minute.$BR
+(b) 2 minutes.
+$PAR
+$BR
+Enter your answers to the tenth's place.$BR
+By Euler's method:$BR
+\(T(1) =\)\{ans_rule(5)\} $BR
+\(T(2) =\)\{ans_rule(5)\} $BR$BR
+
+$HR
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS($ans1->with(tolerance=>.01)->cmp);
+ANS($ans2->with(tolerance=>.01)->cmp);
+
+
+SOLUTION(EV3(<<'END_SOLUTION'));
+$PAR SOLUTION $PAR
+In Excel, set up columns for \(t_n, \frac{dT}{dt}=k(M-T)=(1)(70-T)\), and \(T_n\). Define  \( \frac{dT}{dt}=k(M-T)=(1)(70-T) \) as shown in cell C2 below.
+$BR
+$BR
+
+\{ image( "HW03-15-1.png", width=>700, height=>700,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR$BR
+
+Now define \(T_{n+1}=T_n+h \left(\frac{dT}{dt}|_n \right)\) as in cell D2 below.$BR
+$BR
+\{ image( "HW03-15-2.png", width=>700, height=>700,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+$BR
+Set h=0.1 and copy the three columns \(t_n, \frac{dT}{dt}\), and \(T_n\) down until \(t_n=2.0\). The values for \(T(1)\) and \(T(2)\) can be read from column D (see the outlined cells in the image below. $BR
+$BR
+
+\{ image( "HW03-15-3.png", width=>700, height=>700,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+$BR
+
+END_SOLUTION
+
+ENDDOCUMENT();        

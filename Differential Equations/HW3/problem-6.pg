@@ -1,0 +1,106 @@
+## Nagle
+## Section 1.4
+## Problem 9
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$ans1 = Compute("-0.632");
+$ans2 = Compute("-0.443");
+$ans3 = Compute("-0.667");
+$ans4 = Compute("-0.500");
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Use Excel or another spreadsheet application to approximate the solution to the initial value problem 
+\[ \frac{dy}{dx} = \frac{1}{x^2}-\frac{y}{x}-y^2  \text{   ,   }y(1) = -1\]$BR
+on the interval \(1\le x\le2\) using Euler’s method with \(h=0.1\) .
+
+Compare these approximations with the actual solution \(y=-1/x\) by graphing the polygonal-line approximation and the actual solution on the same coordinate system. $PAR
+$BR
+Enter your answers to the thousandth's place.$BR$BR
+By Euler's method:$BR
+\(y(1.5) =\)\{ans_rule(5)\} $BR
+\(y(2) =\)\{ans_rule(5)\} $BR$BR
+By the solution \(y=-1/x\):$BR
+\(y(1.5) =\)\{ans_rule(5)\} $BR
+\(y(2) =\)\{ans_rule(5)\} $BR
+
+$HR
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS($ans1->with(tolerance=>.01)->cmp);
+ANS($ans2->with(tolerance=>.01)->cmp);
+ANS($ans3->with(tolerance=>.01)->cmp);
+ANS($ans4->with(tolerance=>.01)->cmp);
+
+SOLUTION(EV3(<<'END_SOLUTION'));
+$PAR SOLUTION $PAR
+In Excel, set up columns for \(x_n, \frac{dy}{dx}=\frac{1}{x^2}-\frac{y}{x}-y^2\), and \(y_n\). Define \( \frac{dy}{dx}=\frac{1}{x^2}-\frac{y}{x}-y^2\) as shown in cell C2 below.
+$BR
+$BR
+
+\{ image( "HW03-1.png", width=>700, height=>700,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR$BR
+
+Now define \(y_{n+1}=y_n+h \left(\frac{dy}{dx}|_n \right)\) as in cell D2 below.
+$BR
+$BR
+$BR
+
+\{ image( "HW03-2.png", width=>700, height=>700,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+$BR
+Set h=0.1 and copy the three columns \(x_n, \frac{dy}{dx}\), and \(y_n\) down until \(x_n=2.0\). The values for \(y(1.5)\) and \(y(2)\) can be read from column D (see the outlined cells in the image below. $BR
+$BR
+
+\{ image( "HW03-3.png", width=>700, height=>700,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+$BR
+
+Add columns for the "exact solution" as shown below.$BR
+$BR
+
+\{ image( "HW03-4.png", width=>700, height=>700,  
+tex_size=>700, extra_html_tags=>'alt="Graph of a function."' ) \}$BR
+$BR
+
+END_SOLUTION
+
+ENDDOCUMENT();        

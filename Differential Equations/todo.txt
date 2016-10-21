@@ -1,5 +1,5 @@
 Notes on problem updates:
-
+-- 30 minutes 
 HW1
 1. Alert WIT to update the macros, once macros are updated, convert all to PGML simplified file syntax 
     -problem-1

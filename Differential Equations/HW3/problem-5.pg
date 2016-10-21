@@ -1,0 +1,93 @@
+## Nagle
+## Section 1.4
+## Problem 6
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$ans1 = Compute("1.4");
+$ans2 = Compute("1.96");
+$ans3 = Compute("2.789");
+$ans4 = Compute("4.11");
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+
+
+Use Euler's Method to approximate the solution to the given initial value problem at the points \( x = 1.2, 1.4, 1.6, 1.8 \) using steps of size \(0.2 \). \((h = 0.2)
+\) $PAR
+$BR
+
+\( \displaystyle x_{0} = 1,\mbox{ } y_{0} = 1,\mbox{ }h = 0.2\)$BR
+\(\displaystyle \frac{dy}{dx} = \frac{y^{2} + y}{x}\)$BR
+
+$BR
+$PAR
+\(\displaystyle x_{1} = 1.2, \mbox{ }y_{1} =\)\{ans_rule(5)\} $BR
+\(\displaystyle x_{2} = 1.4, \mbox{ }y_{2} =\)\{ans_rule(5)\} $BR
+\(\displaystyle x_{3} = 1.6, \mbox{ }y_{3} =\)\{ans_rule(5)\} $BR
+\(\displaystyle x_{4} = 1.8, \mbox{ }y_{4} =\)\{ans_rule(5)\} $BR
+
+$HR
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS($ans1->with(tolerance=>.001)->cmp);
+ANS($ans2->with(tolerance=>.001)->cmp);
+ANS($ans3->with(tolerance=>.001)->cmp);
+ANS($ans4->with(tolerance=>.001)->cmp);
+
+SOLUTION(EV3(<<'END_SOLUTION'));
+$PAR SOLUTION $PAR
+
+\[x_{0} = 1,\mbox{ } y_{0} = 1,\mbox{ }h = 0.2\]
+\[\frac{dy}{dx} = \frac{y^{2} + y}{x}\]
+\[ \\ \]
+\[x_{1} = x_{0} + 0.2 = 1.2\]
+\[y_{1} = y_{0} + 0.2f(x,y) = 1 + 0.2(\frac{(1)^{2} + 1}{1})) = 1.4\]
+\[ \\ \]
+\[x_{2} = 1.2 + 0.2 = 1.4\]
+\[y_{2} = 1.4 + 0.2(\frac{(1.4)^{2} + 1.4}{1.2})) = 1.960\]
+\[ \\ \]
+\[x_{3} = 1.6,\mbox{ } y_{3} = 2.789\]
+\[x_{4} = 1.8,\mbox{ } y_{4} = 4.110\]
+
+
+END_SOLUTION
+
+
+
+ENDDOCUMENT();        
